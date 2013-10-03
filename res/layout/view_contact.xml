@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="@drawable/white_background"
+    android:layout_height="fill_parent">
+    
+	<RelativeLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingLeft="0dp"
+	    android:paddingBottom="10dp"
+	    android:paddingRight="0dp" >
+	    
+	     <ImageView
+	        android:id="@+id/contact_image_view"
+	         android:layout_width="match_parent"
+	         android:layout_height="160dip"
+	         android:layout_alignParentTop="true"
+	         android:layout_centerHorizontal="true"
+	         android:scaleType="fitXY"
+	         android:src="@drawable/view_contact_icon"  />
+	    
+	    <TextView
+	        android:id="@+id/list_label_phone"
+	        style="@style/blueSubheadings"
+	    	android:layout_below="@id/contact_image_view"
+	        android:text="PHONE" />
+	    
+	    <ImageView
+	        android:id="@+id/under_phone_line"
+		    android:layout_below="@id/list_label_phone"
+		    style="@style/separatorLineHeadings" />
+	    
+	    <TextView
+	        android:id="@+id/mobile_subheading"
+	        style="@style/viewContactGreySubheadings"
+	    	android:layout_below="@id/under_phone_line"
+	        android:text="MOBILE" />
+		    
+	    <TextView
+	        android:id="@+id/list_item_mobile_phone"
+			style="@style/contactDetails"
+	        android:layout_below="@id/mobile_subheading" />
+	    
+	    <ImageView
+	        android:id="@+id/under_mobile_phone_line"
+		    android:layout_below="@id/list_item_mobile_phone"
+		    style="@style/separatorLine" />
+	
+	    <TextView
+	        android:id="@+id/home_subheading"
+	        style="@style/viewContactGreySubheadings"
+	    	android:layout_below="@id/under_mobile_phone_line"
+	        android:text="HOME" />
+	    
+	    <TextView
+	        android:id="@+id/list_item_home_phone"
+			style="@style/contactDetails"
+	        android:layout_below="@id/home_subheading" />
+	    
+	    <ImageView
+	        android:id="@+id/under_home_phone_line"
+		    android:layout_below="@id/list_item_home_phone"
+		    style="@style/separatorLine" />
+	    
+	    <ImageButton
+	        android:id="@+id/message_home"
+	        style="@style/MessageIcon"
+	        android:layout_below="@id/under_mobile_phone_line" />
+        
+	    <ImageButton
+	        android:id="@+id/call_home"
+			style="@style/CallIcon"
+	        android:layout_below="@+id/under_mobile_phone_line"
+	        android:layout_toLeftOf="@+id/message_home" />
+	    	    
+	    <TextView
+	        android:id="@+id/work_subheading"
+	        style="@style/viewContactGreySubheadings"
+	    	android:layout_below="@id/under_home_phone_line"
+	        android:text="WORK" />
+	    
+	    <TextView
+	        android:id="@+id/list_item_work_phone"
+			style="@style/contactDetails"
+	        android:layout_below="@id/work_subheading" />
+	    
+	    <ImageButton
+	        android:id="@+id/message_work"
+	        style="@style/MessageIcon"
+	        android:layout_below="@id/under_home_phone_line" />
+        
+	    <ImageButton
+	        android:id="@+id/call_work"
+			style="@style/CallIcon"
+	        android:layout_below="@+id/under_home_phone_line"
+	        android:layout_toLeftOf="@+id/message_work" />
+	    
+	    <TextView
+	        android:id="@+id/list_label_email"
+	        style="@style/blueSubheadings"
+	    	android:layout_below="@id/list_item_work_phone"
+	        android:text="EMAIL" />
+	    
+	    <ImageView
+	        android:id="@+id/under_email_line"
+		    android:layout_below="@id/list_label_email"
+		    style="@style/separatorLineHeadings" />
+	    
+	    <TextView
+	        android:id="@+id/list_item_email"
+			style="@style/contactDetails"
+	        android:layout_below="@id/under_email_line" />
+	    
+	        
+	    <TextView
+	        android:id="@+id/list_address_email"
+	        style="@style/blueSubheadings"
+	    	android:layout_below="@id/list_item_email"
+	        android:text="ADDRESS" />
+	    
+	    <ImageView
+	        android:id="@+id/under_address_line"
+		    android:layout_below="@id/list_address_email"
+		    style="@style/separatorLineHeadings" />
+	    
+	    <TextView
+	        android:id="@+id/home_addr_subheading"
+	        style="@style/viewContactGreySubheadings"
+	    	android:layout_below="@id/under_address_line"
+	        android:text="HOME" />
+		    
+	    <TextView
+	        android:id="@+id/list_home_address"
+			style="@style/contactDetails"
+	        android:layout_below="@id/home_addr_subheading" />
+	    
+	    <ImageView
+	        android:id="@+id/under_home_address_line"
+		    android:layout_below="@id/list_home_address"
+		    style="@style/separatorLine" />
+	
+	     <TextView
+	        android:id="@+id/work_addr_subheading"
+	        style="@style/viewContactGreySubheadings"
+	    	android:layout_below="@id/under_home_address_line"
+	        android:text="WORK" />
+	
+	     <TextView
+	        android:id="@+id/list_work_address"
+			style="@style/contactDetails"
+	        android:layout_below="@id/work_addr_subheading" />
+	     
+	     <TextView
+	        android:id="@+id/list_label_DOB"
+	        style="@style/blueSubheadings"
+	    	android:layout_below="@id/list_work_address"
+	        android:text="DATE OF BIRTH" />
+	    
+	    <ImageView
+	        android:id="@+id/under_DOB_line"
+		    android:layout_below="@id/list_label_DOB"
+		    style="@style/separatorLineHeadings" />
+	    
+	    <TextView
+	        android:id="@+id/list_item_DOB"
+			style="@style/contactDetails"
+	        android:layout_below="@id/under_DOB_line" />
+
+	    <ImageButton
+	        android:id="@+id/message_mobile"
+	        style="@style/MessageIcon"
+	        android:layout_below="@+id/under_phone_line"
+	        android:layout_toLeftOf="@+id/message_home" />
+
+	    <ImageButton
+	        android:id="@+id/call_mobile"
+	        style="@style/CallIcon"
+	        android:layout_below="@+id/under_phone_line"
+	        android:layout_toLeftOf="@+id/message_mobile" />
+	    
+	</RelativeLayout>
+</ScrollView>

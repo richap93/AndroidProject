@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="rpat789.softeng206.contactsmanager"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/homepage"
+        android:theme="@style/ThemeSelector" >
+        <activity
+            android:name="rpat789.softeng206.contactsmanager.MainActivity"
+            android:label="@string/homepage"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="rpat789.softeng206.contactsmanager.ViewContact"
+            android:label="@string/title_activity_view_contact" 
+            android:parentActivityName="rpat789.softeng206.contactsmanager.AllContacts">
+        </activity>
+        <activity
+            android:name="rpat789.softeng206.contactsmanager.AddContact"
+            android:label="@string/title_activity_add_contact" 
+            android:parentActivityName="rpat789.softeng206.contactsmanager.AllContacts">
+        </activity>
+        <activity
+            android:name="rpat789.softeng206.contactsmanager.AllContacts"
+            android:label="@string/title_activity_all_contacts" >
+        </activity>
+    </application>
+
+</manifest>

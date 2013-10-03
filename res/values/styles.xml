@@ -1,0 +1,118 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+        <style name="separatorLineHeadings" >
+        <item name="android:layout_width">match_parent</item>
+	    <item name="android:paddingLeft">5dip</item>
+	    <item name="android:paddingBottom">2dip</item>
+	    <item name="android:scaleType">fitXY</item>
+	    <item name="android:paddingRight">5dip</item>
+	    <item name="android:src">@drawable/line_black</item>
+	    <item name="android:layout_height">3dip</item>
+	</style>
+    <style name="separatorLine" >
+        <item name="android:layout_width">match_parent</item>
+	    <item name="android:paddingLeft">5dip</item>
+	    <item name="android:paddingBottom">2dip</item>
+	    <item name="android:scaleType">fitXY</item>
+	    <item name="android:paddingRight">5dip</item>
+	    <item name="android:src">@drawable/line_grey</item>
+	    <item name="android:layout_height">3dip</item>
+	</style>
+	    
+    <style name="viewContactGreySubheadings" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    	<item name="android:textSize">15sp</item>
+    	<item name="android:paddingTop">5dp</item>
+    	<item name="android:paddingBottom">2dp</item>
+    	<item name="android:paddingLeft">5dp</item>
+    	<item name="android:textColor">#A3A3A3</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+    </style>
+    
+    <style name="viewContactGreySubheadingsAdd" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    	<item name="android:textSize">15sp</item>
+    	<item name="android:paddingTop">10dp</item>0
+    	<item name="android:paddingBottom">2dp</item>
+    	<item name="android:paddingLeft">8dp</item>
+    	<item name="android:textColor">#A3A3A3</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+    </style>
+    
+    <style name="contactDetails" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+    
+    <style name="blueSubheadings" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textColor">#00C4CE</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+    </style>
+        
+	<style name="ThemeSelector" parent="android:Theme.Light">
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+    </style>
+ 
+    <style name="WindowTitleBackground">     
+        <item name="android:background">@drawable/action_bar</item>
+    </style>
+    
+    <style name="ThemeSelector" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+    </style>
+ 
+    <style name="ActionBar" parent="android:style/Widget.Holo.ActionBar">     
+        <item name="android:background">@drawable/action_bar</item>
+    </style>
+    
+    <style name="MessageIcon" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:src">@drawable/msg_icon</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginTop">6dip</item>
+        <item name="android:layout_marginRight">20dip</item>
+        <item name="android:layout_marginLeft">20dip</item>
+	    <item name="android:padding">2dip</item>
+        <item name="android:layout_height">wrap_content</item> 
+    </style>
+    
+    <style name="CallIcon" >
+        <item name="android:layout_width">wrap_content</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:layout_marginTop">6dip</item>
+	    <item name="android:padding">2dip</item>
+	    <item name="android:src">@drawable/call_icon</item>
+    </style>
+    
+</resources>
