@@ -1,5 +1,6 @@
 package rpat789.softeng206.contactsmanager;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -56,7 +57,26 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+		onCreate(db);
 
+	}
+	
+	public void insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
+			String homeAdd, String workAdd, String dob) {
+		ContentValues cv = new ContentValues();
+		cv.put(FIRST_NAME, first);
+		cv.put(LAST_NAME, last);
+		cv.put(MOBILE_PHONE, mobile);
+		cv.put(HOME_PHONE, homePh);
+		cv.put(WORK_PHONE, workPh);
+		cv.put(EMAIL, email);
+		cv.put(HOME_ADDRESS, homeAdd);
+		cv.put(WORK_ADDRESS, workAdd);
+		cv.put(DOB, dob);
+		
+		this.getWritableDatabase().insert(TABLE_CONTACTS, null, cv);
+		
 	}
 
 }
