@@ -1,5 +1,8 @@
 package rpat789.softeng206.contactsmanager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,9 +11,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,52 +18,64 @@ public class ViewContact extends Activity {
 	
 	private Contact contact;
 	private ContactsDatabaseHelper dbHelper;
+	private String fName, lName, fullName;
 	Cursor c;
-	
+	String id;
+	List<TextView> tvs = new ArrayList<TextView>();
+	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_contact);
-//		contact = (Contact) getIntent().getSerializableExtra("selectedContact");
-//		setView();
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Intent i = getIntent();
-		String id = i.getStringExtra("ID");
+		id = i.getStringExtra("ID");
 		
 		dbHelper = ContactsDatabaseHelper.getDatabase(ViewContact.this);
 		c = dbHelper.getContact(id);
 
 		if (c.moveToFirst()) {
-			String fName = c.getString(1);
-			System.out.println(fName);
-			setTitle(fName);
+			fName = c.getString(1);
+			lName = c.getString(2);
+			fullName = fName + " " + lName;
+			setTitle(fullName);
+			populateView(c);
 		}
 
-		
 	}
 
-	private void setView(){
-		
+	private void populateView(Cursor c){
+			
 		//Access textview elements inside the view (Note we must specify the parent view to look in)
-		TextView homeNum = (TextView)findViewById(R.id.list_item_home_phone);
-		TextView workNum = (TextView)findViewById(R.id.list_item_work_phone);
-		TextView mobile = (TextView)findViewById(R.id.list_item_mobile_phone);
-		TextView homeAdd = (TextView)findViewById(R.id.list_home_address);
-		TextView workAdd = (TextView)findViewById(R.id.list_work_address);	
-		TextView email = (TextView)findViewById(R.id.list_item_email);
-		TextView birthday = (TextView)findViewById(R.id.list_item_DOB);
+		mobile = (TextView)findViewById(R.id.list_item_mobile_phone);
+		homeNum = (TextView)findViewById(R.id.list_item_home_phone);
+		workNum = (TextView)findViewById(R.id.list_item_work_phone);
+		email = (TextView)findViewById(R.id.list_item_email);
+		homeAdd = (TextView)findViewById(R.id.list_home_address);
+		workAdd = (TextView)findViewById(R.id.list_work_address);	
+		birthday = (TextView)findViewById(R.id.list_item_DOB);
 		
-		//Set the text for each textview(use the position argument to find the appropriate element in the list)
-		workNum.setText(contact.getWorkNumber());
-		mobile.setText(contact.getMobNumber());
-		homeAdd.setText(contact.getHomeAddress());
-		workAdd.setText(contact.getWorkAddress());
-		email.setText(contact.getEmail());
-		birthday.setText(contact.getDOB());
+		//Populate list of TextViews
+		tvs.add(mobile);
+		tvs.add(homeNum);
+		tvs.add(workNum);
+		tvs.add(email);
+		tvs.add(homeAdd);
+		tvs.add(workAdd);
+		tvs.add(birthday);
 		
+		//Set text for all the TextViews
+		TextView tv;
+		int j;
+		for (int i = 3; i < 10; i++) {
+			j = i - 3;
+			tv = tvs.get(j);
+			tv.setText(c.getString(i));
+		}
 	}
 	
 	@Override
@@ -81,7 +93,7 @@ public class ViewContact extends Activity {
 			
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ViewContact.this);
 			dialogBuilder.setTitle("Delete");
-			dialogBuilder.setMessage(contact.getName() + " will be removed from contacts");
+			dialogBuilder.setMessage(fullName + " will be removed from contacts");
 			dialogBuilder.setNegativeButton("Cancel", null);
 			dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				
@@ -90,8 +102,9 @@ public class ViewContact extends Activity {
 					 switch (which){
 				        case DialogInterface.BUTTON_POSITIVE:
 				            //Yes button clicked
+				        	dbHelper.deleteContact(id);
 				        	finish();
-				        	Toast.makeText(getApplicationContext(), "Contact deleted", Toast.LENGTH_LONG).show();
+				        	Toast.makeText(ViewContact.this, "Contact deleted", Toast.LENGTH_LONG).show();
 				            break;
 
 				        case DialogInterface.BUTTON_NEGATIVE:

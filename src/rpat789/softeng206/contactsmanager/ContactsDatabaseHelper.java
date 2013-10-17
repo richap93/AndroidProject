@@ -92,7 +92,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public long insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
 			String homeAdd, String workAdd, String dob) {
 		
-//		this.open();
+		open();
 		
 		ContentValues cv = new ContentValues();
 		cv.put(FIRST_NAME, first);
@@ -127,6 +127,11 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		dbHelper.open();
 		return contactsDb.query(TABLE_CONTACTS, null, CONTACTS_ID + "= ?", new String[]{id}, null, null, null);
 		
+	}
+
+	public void deleteContact(String id) {
+		// TODO Auto-generated method stub
+		int num = this.getWritableDatabase().delete(TABLE_CONTACTS, CONTACTS_ID + " = " + id, null);
 	}
 	
 //

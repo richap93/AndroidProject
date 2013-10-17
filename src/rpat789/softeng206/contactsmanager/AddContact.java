@@ -112,11 +112,12 @@ public class AddContact extends Activity {
 				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(AddContact.this);
 //				entry.open();
 				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
-				entry.close();
+//				entry.
 				Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
-				finish();
+				AddContact.this.finish();
 			}
 			break;
+			
 		case R.id.cancel_add:
 			
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddContact.this);
