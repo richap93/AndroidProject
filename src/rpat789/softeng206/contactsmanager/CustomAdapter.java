@@ -2,11 +2,12 @@ package rpat789.softeng206.contactsmanager;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class Adapter {
+public class CustomAdapter {
 	
 	private Context context;
 	private SQLiteDatabase contactsDb;
@@ -69,11 +70,11 @@ public class Adapter {
 		}
 	}
 	
-	public Adapter(Context c) {
+	public CustomAdapter(Context c) {
 		context = c;
 	}
 		
-	public Adapter open() {
+	public CustomAdapter open() {
 		dbHelper = new ContactsDatabaseHelper(context);
 		contactsDb = dbHelper.getWritableDatabase();
 		return this;
@@ -98,6 +99,27 @@ public class Adapter {
 		
 		return contactsDb.insert(TABLE_CONTACTS, null, cv);
 		
+	}
+	
+	public Cursor getAllData() {
+		String buildSQL = "SELECT * FROM "+ this.TABLE_CONTACTS;
+//		String[] columns = {CONTACTS_ID, FIRST_NAME, LAST_NAME, MOBILE_PHONE, HOME_PHONE, WORK_PHONE,
+//				EMAIL, HOME_ADDRESS, WORK_ADDRESS, DOB};
+//		Cursor c = contactsDb.query(TABLE_CONTACTS, columns, null, null, null, null, null);
+		return dbHelper.getReadableDatabase().rawQuery(buildSQL, null);
+	} 
+	
+	public int deleteAll(){
+		
+		return contactsDb.delete(TABLE_CONTACTS, null, null);
+	
+	}
+	
+	public Cursor queueAll() {
+		String[] columns = {CONTACTS_ID, FIRST_NAME, LAST_NAME, MOBILE_PHONE, HOME_PHONE, WORK_PHONE,
+				EMAIL, HOME_ADDRESS, WORK_ADDRESS, DOB};
+		Cursor c = contactsDb.query(TABLE_CONTACTS, columns, null, null, null, null, null);
+		return c;
 	}
 
 }

@@ -101,7 +101,7 @@ public class AddContact extends Activity {
 			String emailAddress = email.getText().toString();
 			String dateOfBirth = birthday.getText().toString();
 			
-			Adapter entry = new Adapter(AddContact.this);
+			CustomAdapter entry = new CustomAdapter(AddContact.this);
 			entry.open();
 			entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
 			entry.close();

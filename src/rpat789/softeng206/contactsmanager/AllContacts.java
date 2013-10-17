@@ -1,13 +1,13 @@
 package rpat789.softeng206.contactsmanager;
 
-import java.util.ArrayList;
 import java.util.List;
-import android.os.Bundle;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class AllContacts extends Fragment {
@@ -22,6 +23,9 @@ public class AllContacts extends Fragment {
 	
 	private ListView listView;
 	List<Contact> contactList;
+	private CustomAdapter adapter;
+	Cursor cursor;
+
 	
 	@Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,11 +34,24 @@ public class AllContacts extends Fragment {
 	                false);
 	    super.onCreate(savedInstanceState);
 
-		listView = (ListView)rootView.findViewById(R.id.main_listView);
-		
-		//populate list view and set an adapter to it
+		adapter = new CustomAdapter(getActivity());
 		setUpListView();
-		setUpOnItemClickListener();
+		
+		cursor = adapter.getAllData();
+		
+		getActivity().startManagingCursor(cursor);
+		
+		//add stuff to listView
+		String[] from = new String[] {adapter.FIRST_NAME, adapter.MOBILE_PHONE};
+		int[] to = new int[]{R.id.list_item_text_contact, R.id.list_item_text_number}; 
+
+		
+		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_list_view, cursor, from, to);
+	
+		listView = (ListView)rootView.findViewById(R.id.main_listView);
+		listView.setAdapter(cursorAdapter);
+		//populate list view and set an adapter to it
+//		setUpOnItemClickListener();
 		return rootView;
 	}
 	
@@ -54,24 +71,30 @@ public class AllContacts extends Fragment {
 	}
 	
 	public void setUpListView() {
+		adapter = new CustomAdapter(getActivity());
+		adapter.open();
+		adapter.deleteAll();
+		adapter.insertContact("Richa", "Patel", "0211095202", "6257766", "123456", "abc@gmail.com", "Home sweet home", "Google", "5/7/93");
+		adapter.insertContact("Nikita", "Kabra", "021258742", "6272101", "2692686", "def@gmail.com", "Iberia g", "Microsoft", "22/09/93");
 		
-		contactList = new ArrayList<Contact>();
 		
-		contactList.add(new Contact("Alice", "Lee", "15/10/1991", "6255521", "6254477", "0211011231", "1 Alice Avenue, Mt Roskill", null, "alice@gmail.com"));
-		contactList.add(new Contact("Abby", "Gail", null, "6245251", "6879477", "0211000231", "52 King Avenue, Remuera", null, "abby.gail@hotmail.com"));
-		contactList.add(new Contact("Barry", null, null, "8355251", "5239477", "02255412310", "21 Oakdale Road, Hillsborough", null, "barry@gmail.com"));
-		contactList.add(new Contact("Bob", "Bailey", "21/01/1993", "4265251", "2254477", "0276510652", null, null, null));
-		contactList.add(new Contact("Billy", "Blob", null, "4264561", null, "021125652", null, null, null));
-		contactList.add(new Contact("Chris", "Chan", null, "5432585", "6284561", "0274821152", "2 Clifford Road, Meadowbank", null, null));
-		contactList.add(new Contact("Dave", "Wilson", null, "5445585", "4878562", "0212451265", "10 Lockie Ave, Mt Eden", null, "dave0221@hotmail.com"));
-		contactList.add(new Contact("Jo", "Diver", null, "5432585", "8256561", "0224115791", null, "211 Manukau Road, Royal Oak", null));
-		contactList.add(new Contact("Harry", "McKenzie", null, null, "6200141", null, null, null, null));
-		contactList.add(new Contact("Nikita", "Kabra", null, "6254170", null, "0211005214", "10 Halsey Drive Road, Lynfield", null, "ilovepurple@hotmail.com"));
-		contactList.add(new Contact("Rachel", null , null, null, null, "0274589632", null, null, null));
-		contactList.add(new Contact("Zac", "Green", null, "5478415", "6528162", null, null, null, null));
-		
-		ListAdapter listAdapter = new CustomListAdapter(getActivity(), contactList);
-		listView.setAdapter(listAdapter);
+		//		contactList = new ArrayList<Contact>();
+//		
+//		contactList.add(new Contact("Alice", "Lee", "15/10/1991", "6255521", "6254477", "0211011231", "1 Alice Avenue, Mt Roskill", null, "alice@gmail.com"));
+//		contactList.add(new Contact("Abby", "Gail", null, "6245251", "6879477", "0211000231", "52 King Avenue, Remuera", null, "abby.gail@hotmail.com"));
+//		contactList.add(new Contact("Barry", null, null, "8355251", "5239477", "02255412310", "21 Oakdale Road, Hillsborough", null, "barry@gmail.com"));
+//		contactList.add(new Contact("Bob", "Bailey", "21/01/1993", "4265251", "2254477", "0276510652", null, null, null));
+//		contactList.add(new Contact("Billy", "Blob", null, "4264561", null, "021125652", null, null, null));
+//		contactList.add(new Contact("Chris", "Chan", null, "5432585", "6284561", "0274821152", "2 Clifford Road, Meadowbank", null, null));
+//		contactList.add(new Contact("Dave", "Wilson", null, "5445585", "4878562", "0212451265", "10 Lockie Ave, Mt Eden", null, "dave0221@hotmail.com"));
+//		contactList.add(new Contact("Jo", "Diver", null, "5432585", "8256561", "0224115791", null, "211 Manukau Road, Royal Oak", null));
+//		contactList.add(new Contact("Harry", "McKenzie", null, null, "6200141", null, null, null, null));
+//		contactList.add(new Contact("Nikita", "Kabra", null, "6254170", null, "0211005214", "10 Halsey Drive Road, Lynfield", null, "ilovepurple@hotmail.com"));
+//		contactList.add(new Contact("Rachel", null , null, null, null, "0274589632", null, null, null));
+//		contactList.add(new Contact("Zac", "Green", null, "5478415", "6528162", null, null, null, null));
+//		
+//		ListAdapter listAdapter = new CustomListAdapter(getActivity(), contactList);
+//		listView.setAdapter(listAdapter);
 		
 		
 	} 
