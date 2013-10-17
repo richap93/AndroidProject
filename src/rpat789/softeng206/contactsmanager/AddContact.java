@@ -27,6 +27,7 @@ public class AddContact extends Activity {
 	TextView workAdd;
 	TextView email;
 	TextView birthday;
+//	TextView contactId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class AddContact extends Activity {
 		workAdd = (TextView)findViewById(R.id.item_work_addr);	
 		email = (TextView)findViewById(R.id.item_email_addr);
 		birthday = (TextView)findViewById(R.id.birthday);	
-		
+//		contactId = (TextView)findViewById(R.id.contact_id);
 	}
 	
 	private void setUpContactButton() {

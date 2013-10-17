@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,15 +17,32 @@ import android.widget.Toast;
 public class ViewContact extends Activity {
 	
 	private Contact contact;
+	private ContactsDatabaseHelper dbHelper;
+	Cursor c;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_contact);
-		contact = (Contact) getIntent().getSerializableExtra("selectedContact");
-		setView();
-		setTitle(contact.getName());
+//		contact = (Contact) getIntent().getSerializableExtra("selectedContact");
+//		setView();
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		Intent i = getIntent();
+		String id = i.getStringExtra("ID");
+		
+		dbHelper = ContactsDatabaseHelper.getDatabase(ViewContact.this);
+		c = dbHelper.getContact(id);
+
+		if (c.moveToFirst()) {
+			String fName = c.getString(1);
+			System.out.println(fName);
+			setTitle(fName);
+		}
+
+		
 	}
 
 	private void setView(){

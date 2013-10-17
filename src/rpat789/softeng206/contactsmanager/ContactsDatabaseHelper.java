@@ -80,11 +80,10 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	//		context = c;
 	//	}
 	//		
-		private ContactsDatabaseHelper open() {
-			dbHelper = new ContactsDatabaseHelper(context);
-			contactsDb = dbHelper.getWritableDatabase();
-			return this;
-		}
+	private ContactsDatabaseHelper open() {
+		contactsDb = dbHelper.getWritableDatabase();
+		return this;
+	}
 
 	//	public void close() {
 	//		dbHelper.close();
@@ -93,7 +92,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public long insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
 			String homeAdd, String workAdd, String dob) {
 		
-		this.open();
+//		this.open();
 		
 		ContentValues cv = new ContentValues();
 		cv.put(FIRST_NAME, first);
@@ -122,6 +121,12 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
 		return contactsDb.delete(TABLE_CONTACTS, null, null);
 
+	}
+	
+	public Cursor getContact(String id) {
+		dbHelper.open();
+		return contactsDb.query(TABLE_CONTACTS, null, CONTACTS_ID + "= ?", new String[]{id}, null, null, null);
+		
 	}
 	
 //
