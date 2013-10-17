@@ -4,6 +4,7 @@ package rpat789.softeng206.contactsmanager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
@@ -11,18 +12,43 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddContact extends Activity {
 	
 	ImageButton imageButton;
-
+	TextView fName;
+	TextView lName;
+	TextView homeNum;
+	TextView workNum;
+	TextView mobile;
+	TextView homeAdd;
+	TextView workAdd;
+	TextView email;
+	TextView birthday;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_contact);
 		setUpContactButton();
+		setTextViews();
+
+	}
+	
+	private void setTextViews() {
+		
+		fName = (TextView)findViewById(R.id.first_name);
+		lName = (TextView)findViewById(R.id.last_name);
+		homeNum = (TextView)findViewById(R.id.item_home_number);
+		workNum = (TextView)findViewById(R.id.item_work_number);
+		mobile = (TextView)findViewById(R.id.item_mobile_number);
+		homeAdd = (TextView)findViewById(R.id.item_home_addr);
+		workAdd = (TextView)findViewById(R.id.item_work_addr);	
+		email = (TextView)findViewById(R.id.item_email_addr);
+		birthday = (TextView)findViewById(R.id.birthday);	
 		
 	}
 	
@@ -50,6 +76,8 @@ public class AddContact extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,6 +88,27 @@ public class AddContact extends Activity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//Finish activity if save or cancel pressed
+		switch (item.getItemId()) {
+		case R.id.save_contact:
+			
+			String firstName = fName.getText().toString();
+			String lastName = lName.getText().toString();
+			String mobNum = mobile.getText().toString();
+			String homePh = homeNum.getText().toString();
+			String workPh = workNum.getText().toString();
+			String homeAddress = homeAdd.getText().toString();
+			String workAddress = workAdd.getText().toString();
+			String emailAddress = email.getText().toString();
+			String dateOfBirth = birthday.getText().toString();
+			
+			Adapter entry = new Adapter(AddContact.this);
+			entry.open();
+			entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
+			entry.close();
+			
+			Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
+			
+		}
 		finish();
 		return (super.onOptionsItemSelected(item));
 	}

@@ -8,44 +8,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 
-public class CustomCursorAdapter extends CursorAdapter {
+//public class CustomCursorAdapter /*extends CursorAdapter*/ {
 
 
-	private Context context;
-	private SQLiteDatabase contactsDb;
-	private ContactsDatabaseHelper dbHelper;
-	
-	
-	public CustomCursorAdapter(Context context, Cursor c) {
-		super(context, c);
+//	private Context context;
+//	private SQLiteDatabase contactsDb;
+//	private ContactsDatabaseHelper dbHelper;
+//	
+//	
+//	public CustomCursorAdapter(Context c) {
+//		super(context, c);
+//		context = c;
 		// TODO Auto-generated constructor stub
-	}
+//	}
 	
-	@Override
-	public void bindView(View arg0, Context arg1, Cursor arg2) {
-		// TODO Auto-generated method stub
+//	@Override
+//	public void bindView(View arg0, Context arg1, Cursor arg2) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	@Override
+//	public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
+//	public CustomCursorAdapter open() {
+//		dbHelper = new ContactsDatabaseHelper(context);
+//		contactsDb = dbHelper.getWritableDatabase();
+//		return this;
+//	}
+//	
+//	public void close() {
+//		dbHelper.close();
+//	}
+	
 
-	}
-
-	@Override
-	public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public CustomCursorAdapter open() {
-		dbHelper = new ContactsDatabaseHelper(context);
-		contactsDb = dbHelper.getWritableDatabase();
-		return this;
-	}
-	
-	public void close() {
-		dbHelper.close();
-	}
-	
-	public void insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
-			String homeAdd, String workAdd, String dob) {
-		ContentValues cv = new ContentValues();
-		cv.put(FIRST_NAME, first);
-	}
-}
+//}

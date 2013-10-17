@@ -14,11 +14,11 @@
         android:layout_marginRight="5dip"
         android:padding="3dip" >
         
-        <ImageButton
-            android:id="@+id/contact_image"
-            android:layout_width="70dip"
-            android:layout_height="70dip"
-            android:src="@drawable/contact_photo_add" />
+    <ImageButton
+        android:id="@+id/contact_image"
+        android:layout_width="70dip"
+        android:layout_height="70dip"
+        android:src="@drawable/contact_photo_add" />
         
     </LinearLayout>
     
@@ -156,14 +156,12 @@
 	    android:id="@+id/under_birthday_line"
 	    android:layout_below="@id/list_label_birthday"
 	    style="@style/separatorLineHeadings" />
-	
-	<Spinner
-        android:id="@+id/spinner_birthday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:prompt="@string/date"
-        android:entries="@array/date"
-        android:layout_below="@id/under_birthday_line" />
+
+	<EditText
+        android:id="@+id/birthday"
+        android:layout_width="fill_parent"       
+        android:layout_below="@+id/under_birthday_line"
+        android:layout_height="wrap_content"/>
 
 	
 	</RelativeLayout>
