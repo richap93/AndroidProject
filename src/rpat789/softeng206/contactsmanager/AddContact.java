@@ -108,14 +108,14 @@ public class AddContact extends Activity {
 				builder.setPositiveButton("OK", null);
 				AlertDialog dialog = builder.show();
 			} else {
-				CustomAdapter entry = new CustomAdapter(AddContact.this);
-				entry.open();
+				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(AddContact.this);
+//				entry.open();
 				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
 				entry.close();
 				Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
 				finish();
 			}
-		
+			break;
 		case R.id.cancel_add:
 			
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddContact.this);
@@ -133,6 +133,7 @@ public class AddContact extends Activity {
 			});
 			dialogBuilder.setCancelable(true);
 			dialogBuilder.create().show();
+			break;
 		}
 		
 		return (super.onOptionsItemSelected(item));

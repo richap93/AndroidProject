@@ -23,8 +23,8 @@ public class AllContacts extends Fragment {
 	
 	private ListView listView;
 	List<Contact> contactList;
-	private CustomAdapter adapter;
 	Cursor cursor;
+	private ContactsDatabaseHelper dbHelper;
 
 	
 	@Override
@@ -34,15 +34,14 @@ public class AllContacts extends Fragment {
 	                false);
 	    super.onCreate(savedInstanceState);
 
-		adapter = new CustomAdapter(getActivity());
 		setUpListView();
 		
-		cursor = adapter.getAllData();
+		cursor = dbHelper.getAllData();
 		
 		getActivity().startManagingCursor(cursor);
 		
 		//add stuff to listView
-		String[] from = new String[] {adapter.FIRST_NAME, adapter.MOBILE_PHONE};
+		String[] from = new String[] {dbHelper.FIRST_NAME, dbHelper.MOBILE_PHONE};
 		int[] to = new int[]{R.id.list_item_text_contact, R.id.list_item_text_number}; 
 
 		
@@ -61,18 +60,31 @@ public class AllContacts extends Fragment {
 			
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int clickedViewPosition, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(), ViewContact.class);
-				intent.putExtra("selectedContact", contactList.get(clickedViewPosition));
+//				Intent intent = new Intent(getActivity(), ViewContact.class);
+//				intent.putExtra("selectedContact", contactList.get(clickedViewPosition));
 				
-				startActivity(intent);
+				//get the whole view of the item in list
+				ViewGroup group = (ViewGroup)clickedView;
+				
+				//get the first name in that view
+				View name = group.getChildAt(1);
+				
+				TextView fNameView = (TextView)name;
+				String fName = fNameView.getText().toString();
+				
+				//get cursor
+//				Cursor c = 
+				
+				
+//				startActivity(intent);
 			}
 		});
 		
 	}
 	
 	public void setUpListView() {
-		adapter = new CustomAdapter(getActivity());
-		adapter.open();
+		dbHelper = ContactsDatabaseHelper.getDatabase(getActivity());
+//		adapter.open();
 //		adapter.deleteAll();
 //		adapter.insertContact("Richa", "Patel", "0211095202", "6257766", "123456", "abc@gmail.com", "Home sweet home", "Google", "5/7/93");
 //		adapter.insertContact("Nikita", "Kabra", "021258742", "6272101", "2692686", "def@gmail.com", "Iberia g", "Microsoft", "22/09/93");
