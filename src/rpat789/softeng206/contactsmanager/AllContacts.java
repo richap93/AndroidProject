@@ -73,9 +73,9 @@ public class AllContacts extends Fragment {
 	public void setUpListView() {
 		adapter = new CustomAdapter(getActivity());
 		adapter.open();
-		adapter.deleteAll();
-		adapter.insertContact("Richa", "Patel", "0211095202", "6257766", "123456", "abc@gmail.com", "Home sweet home", "Google", "5/7/93");
-		adapter.insertContact("Nikita", "Kabra", "021258742", "6272101", "2692686", "def@gmail.com", "Iberia g", "Microsoft", "22/09/93");
+//		adapter.deleteAll();
+//		adapter.insertContact("Richa", "Patel", "0211095202", "6257766", "123456", "abc@gmail.com", "Home sweet home", "Google", "5/7/93");
+//		adapter.insertContact("Nikita", "Kabra", "021258742", "6272101", "2692686", "def@gmail.com", "Iberia g", "Microsoft", "22/09/93");
 		
 		
 		//		contactList = new ArrayList<Contact>();

@@ -101,15 +101,40 @@ public class AddContact extends Activity {
 			String emailAddress = email.getText().toString();
 			String dateOfBirth = birthday.getText().toString();
 			
-			CustomAdapter entry = new CustomAdapter(AddContact.this);
-			entry.open();
-			entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
-			entry.close();
+			if (firstName.equals("")) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle("Error");
+				builder.setMessage("Please enter a first name");
+				builder.setPositiveButton("OK", null);
+				AlertDialog dialog = builder.show();
+			} else {
+				CustomAdapter entry = new CustomAdapter(AddContact.this);
+				entry.open();
+				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
+				entry.close();
+				Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
+				finish();
+			}
+		
+		case R.id.cancel_add:
 			
-			Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
-			
+			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddContact.this);
+			dialogBuilder.setTitle("Warning");
+			dialogBuilder.setMessage("Changes will be discarded");
+			dialogBuilder.setNegativeButton("Cancel", null);
+			dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				    //OK button clicked
+		        	Toast.makeText(AddContact.this, "Contact deleted", Toast.LENGTH_LONG).show();
+					finish(); 
+				}
+			});
+			dialogBuilder.setCancelable(true);
+			dialogBuilder.create().show();
 		}
-		finish();
+		
 		return (super.onOptionsItemSelected(item));
 	}
 
