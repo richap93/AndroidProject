@@ -35,6 +35,9 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public static final String HOME_ADDRESS = "homeAddress";
 	public static final String WORK_ADDRESS = "workAddress";
 	public static final String DOB = "dob";
+	public static final String FAVOURITES = "favourites";
+	public static final String GROUPS = "groups";
+
 	//		public static final String PHOTO = "photo";
 
 	//SQL string for cars table
@@ -48,13 +51,16 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			+ EMAIL + " TEXT, " 
 			+ HOME_ADDRESS + " TEXT, " 
 			+ WORK_ADDRESS + " TEXT, " 
-			+ DOB + " TEXT);";
+			+ DOB + " TEXT, " 
+			+ FAVOURITES + " INTEGER, " 
+			+ GROUPS + " TEXT);";
 	
 	private List<SortListener> listeners = new ArrayList<SortListener>();
 	private String sortOrder = null;
 
 	private ContactsDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+//		context.deleteDatabase(DATABASE_NAME);
 	}
 
 	public static ContactsDatabaseHelper getDatabase(Context c) {
@@ -109,6 +115,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		cv.put(HOME_ADDRESS, homeAdd);
 		cv.put(WORK_ADDRESS, workAdd);
 		cv.put(DOB, dob);
+		cv.put(FAVOURITES, 0);
 
 		return contactsDb.insert(TABLE_CONTACTS, null, cv);
 
@@ -116,7 +123,6 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
 	public Cursor getAllData(String orderType) {
 		dbHelper.open();
-		System.out.println("Type= "+orderType);
 		String buildSQL = "SELECT * FROM "+ this.TABLE_CONTACTS;
 		//		String[] columns = {CONTACTS_ID, FIRST_NAME, LAST_NAME, MOBILE_PHONE, HOME_PHONE, WORK_PHONE,
 		//				EMAIL, HOME_ADDRESS, WORK_ADDRESS, DOB};
@@ -126,6 +132,11 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 				return contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, orderType);
 		//return dbHelper.getReadableDatabase().rawQuery(buildSQL, null);
 	} 
+	
+	public Cursor getFavoritesData(String orderType) {
+		dbHelper.open();
+		return contactsDb.query(TABLE_CONTACTS, null, FAVOURITES + "= 1", null, null, null, orderType);
+	}
 
 	public int deleteAll(){
 
@@ -142,6 +153,25 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public void deleteContact(String id) {
 		// TODO Auto-generated method stub
 		int num = this.getWritableDatabase().delete(TABLE_CONTACTS, CONTACTS_ID + " = " + id, null);
+	}
+	
+	public boolean updateFavourite(String id) {
+		
+		dbHelper.open();
+		
+		Cursor c = getContact(id);
+		c.moveToFirst();
+		
+		int f = c.getInt(10);
+		int setAs = (f == 0 ) ? 1 : 0; 
+		
+	    ContentValues fav = new ContentValues();
+	    fav.put(FAVOURITES, setAs);
+	    
+	    contactsDb.update(TABLE_CONTACTS, fav, CONTACTS_ID + "=" + id, null);
+	    
+	    return (setAs == 1) ? true : false;
+
 	}
 
 	public void updateContact(String id, String firstName, String lastName, String mobNum,
@@ -206,6 +236,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			l.OrderChanged(event);
 		}
 	}
+
 
 
 	

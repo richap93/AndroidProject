@@ -176,7 +176,13 @@ public class ViewContact extends Activity {
 			
 		} else if (item.getItemId() == R.id.favourites_icon) {
 			
-			Toast.makeText(this,contact.getName() + " saved to favourites" , Toast.LENGTH_LONG).show();
+			boolean isFav = dbHelper.updateFavourite(id);
+			String change = " REMOVED from ";
+			if (isFav){
+				change = " ADDED to ";
+			}
+			
+			Toast.makeText(ViewContact.this,fullName + change + "favourites" , Toast.LENGTH_LONG).show();
 			finish();
 			
 			

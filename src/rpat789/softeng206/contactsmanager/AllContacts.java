@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 public class AllContacts extends Fragment implements SortListener {
 
-
 	private ListView listView;
 	List<Contact> contactList;
 	Cursor cursor;
