@@ -6,11 +6,21 @@
     <string-array name="date">
         <item>Date</item>
     </string-array>
+    
+    <string-array name="group_spinner_content">
+        <item>Not Assigned</item>
+        <item>Emergency Contacts</item>
+        <item>Family</item>
+        <item>Friends</item>
+        <item>Colleages</item>
+    </string-array>
+    
     <string-array name="sort_options">
         <item>Sort by first name</item>
         <item>Sort by last name</item>
         <item>Sort by number</item>
     </string-array>
+    
     <string-array name="camera_options">
         <item>Image</item>
         <item>Take picture</item>

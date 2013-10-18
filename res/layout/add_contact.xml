@@ -168,6 +168,23 @@
 	        android:layout_below="@+id/under_birthday_line"
 	        android:layout_height="wrap_content"/>
 	
+		<TextView
+	        android:id="@+id/list_label_group"
+	        style="@style/blueSubheadings"
+	    	android:layout_below="@id/birthday"
+	        android:text="GROUP" />
+	   	
+		<ImageView
+		    android:id="@+id/under_group_line"
+		    android:layout_below="@id/list_label_group"
+		    style="@style/separatorLineHeadings" />
+		
+		<Spinner 
+		    android:id="@+id/group_spinner"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@id/under_group_line"
+		    android:entries="@array/group_spinner_content" />
 		
 		</RelativeLayout>
 
