@@ -1,6 +1,5 @@
 package rpat789.softeng206.contactsmanager;
 
-import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -9,9 +8,18 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends Activity {
 
@@ -20,6 +28,8 @@ public class MainActivity extends Activity {
 	Fragment fragmentTab2 = new Groups();
 	Fragment fragmentTab3 = new Favourites();
 	AlertDialog levelDialog;
+	ContactsDatabaseHelper dbHelper;
+	Cursor c;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,8 @@ public class MainActivity extends Activity {
         actionBar.addTab(Tab1);
         actionBar.addTab(Tab2);
         actionBar.addTab(Tab3);
+        
+        dbHelper = ContactsDatabaseHelper.getDatabase(MainActivity.this);
 		
 	}
 	
@@ -106,27 +118,45 @@ public class MainActivity extends Activity {
 				@Override
 			    public void onClick(DialogInterface dialog, int which) {
 			        // the user clicked on sort_options[which]
-			    }
-				
-			});
-		
-			dialogBuilder.setNegativeButton("Cancel", null);
-			dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					 switch (which){
-				        case DialogInterface.BUTTON_POSITIVE:
-				            //Yes button clicked
+					 dialog.dismiss();
+		             int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+					 switch (selectedPosition){
+				        case 0:
+				            //Sort by first name selected
+				        	dbHelper.sortContacts("firstName");
 				            break;
 
-				        case DialogInterface.BUTTON_NEGATIVE:
-				            //No button clicked
+				        case 1:
+				        	//Sort by last name selected
+				        	dbHelper.sortContacts("lastName");
 				            break;
-				        }
+				            
+				        case 2:
+				        	//Sort by number selected
+				        	dbHelper.sortContacts("mobilePhone");
+				        	break;
+				      }
 				}
+				
 			});
-			
+
+//			dialogBuilder.setNegativeButton("Cancel", null);
+//			dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					 switch (which){
+//				        case DialogInterface.BUTTON_POSITIVE:
+//				            //Yes button clicked
+//				            break;
+//
+//				        case DialogInterface.BUTTON_NEGATIVE:
+//				            //No button clicked
+//				            break;
+//				      }
+//				}
+//			});
+//			
 			dialogBuilder.setCancelable(true);
             levelDialog = dialogBuilder.create();
             levelDialog.show();
@@ -134,4 +164,6 @@ public class MainActivity extends Activity {
 
 		return (super.onOptionsItemSelected(item));
 	}
+	
 }
+

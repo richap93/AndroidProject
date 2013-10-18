@@ -172,7 +172,6 @@ public class EditContact extends Activity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 				    //OK button clicked
-		        	Toast.makeText(EditContact.this, "Contact deleted", Toast.LENGTH_LONG).show();
 					finish(); 
 				}
 			});

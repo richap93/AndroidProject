@@ -1,10 +1,12 @@
 package rpat789.softeng206.contactsmanager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ContactsDatabaseHelper extends SQLiteOpenHelper{
@@ -47,6 +49,9 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			+ HOME_ADDRESS + " TEXT, " 
 			+ WORK_ADDRESS + " TEXT, " 
 			+ DOB + " TEXT);";
+	
+	private List<SortListener> listeners = new ArrayList<SortListener>();
+	private String sortOrder = null;
 
 	private ContactsDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -109,12 +114,17 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
 	}
 
-	public Cursor getAllData() {
+	public Cursor getAllData(String orderType) {
+		dbHelper.open();
+		System.out.println("Type= "+orderType);
 		String buildSQL = "SELECT * FROM "+ this.TABLE_CONTACTS;
 		//		String[] columns = {CONTACTS_ID, FIRST_NAME, LAST_NAME, MOBILE_PHONE, HOME_PHONE, WORK_PHONE,
 		//				EMAIL, HOME_ADDRESS, WORK_ADDRESS, DOB};
-		//		Cursor c = contactsDb.query(TABLE_CONTACTS, columns, null, null, null, null, null);
-		return dbHelper.getReadableDatabase().rawQuery(buildSQL, null);
+		if (contactsDb == null) {
+			System.out.println("no DB!!!!!!!!!!");
+		}
+				return contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, orderType);
+		//return dbHelper.getReadableDatabase().rawQuery(buildSQL, null);
 	} 
 
 	public int deleteAll(){
@@ -153,6 +163,52 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	    contactsDb.update(TABLE_CONTACTS, newValues, CONTACTS_ID + "=" + id, null);
 	}
 
+	public Cursor sortByFirstName() {
+		// TODO Auto-generated method stub
+		dbHelper.open();
+		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, FIRST_NAME);		
+		return cursor;
+	}
+	
+	public Cursor sortByLastName() {
+		// TODO Auto-generated method stub
+		dbHelper.open();
+		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, LAST_NAME);		
+		return cursor;
+	}
+	
+	public Cursor sortByNumber() {
+		// TODO Auto-generated method stub
+		dbHelper.open();
+		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, MOBILE_PHONE);		
+		return cursor;
+	}
+	
+	public void sortContacts(String order) {
+		// TODO Auto-generated method stub
+		dbHelper.open();
+		sortOrder = order;
+		contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, sortOrder);	
+		fireSortEvent();
+	}
+	
+	public void addSortListener(SortListener l){
+		listeners.add(l);
+	}
+	
+	public void removeSortListener(SortListener l){
+		listeners.remove(l);
+	}
+	private void fireSortEvent() {
+		SortEvent event = new SortEvent(sortOrder);
+		
+		for(SortListener l : listeners){
+			l.OrderChanged(event);
+		}
+	}
+
+
+	
 //
 //	public Cursor queueAll() {
 //		String[] columns = {CONTACTS_ID, FIRST_NAME, LAST_NAME, MOBILE_PHONE, HOME_PHONE, WORK_PHONE,
