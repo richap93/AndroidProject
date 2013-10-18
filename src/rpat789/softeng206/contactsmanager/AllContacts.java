@@ -27,7 +27,7 @@ public class AllContacts extends Fragment implements SortListener {
 	private ContactsDatabaseHelper dbHelper;
 	private String[] from;
 	private int[] to;
-	private String sortOrder = null;
+	private String sortOrder = "firstName";
 
 
 	@Override
