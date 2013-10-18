@@ -27,7 +27,7 @@ public class AllContacts extends Fragment implements SortListener {
 	private ContactsDatabaseHelper dbHelper;
 	private String[] from;
 	private int[] to;
-	private String sortOrder = "firstName";
+	private String sortOrder = null;
 
 
 	@Override
@@ -39,14 +39,7 @@ public class AllContacts extends Fragment implements SortListener {
 
 		dbHelper = ContactsDatabaseHelper.getDatabase(getActivity());
 		dbHelper.addSortListener(this);
-		
-//		String sortOrder = MainActivity.sort_order;
-		 
-//		System.out.println("SORT ORDER IS " + sortOrder);
-//		if (sortOrder.equals("First Name")) {
-//			cursor = dbHelper.sortByLastName();
-//		} else {
-			
+					
 		listView = (ListView)rootView.findViewById(R.id.main_listView);
 		refresh();
 
