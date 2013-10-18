@@ -6,15 +6,12 @@
     <string-array name="date">
         <item>Date</item>
     </string-array>
-    
-    <string-array name="sort_options" >
+    <string-array name="sort_options">
         <item>Sort by first name</item>
         <item>Sort by last name</item>
         <item>Sort by number</item>
     </string-array>
-        
-        
-   <string-array name="camera_options" >
+    <string-array name="camera_options">
         <item>Image</item>
         <item>Take picture</item>
     </string-array>
@@ -29,5 +26,6 @@
     <string name="title_activity_fragment">Fragment</string>
     <string name="title_activity_tab_layout">TabLayout</string>
     <string name="title_activity_all_contacts">AllContacts</string>
+    <string name="title_activity_edit_contact">EditContact</string>
 
 </resources>

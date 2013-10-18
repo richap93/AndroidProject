@@ -133,7 +133,26 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		// TODO Auto-generated method stub
 		int num = this.getWritableDatabase().delete(TABLE_CONTACTS, CONTACTS_ID + " = " + id, null);
 	}
-	
+
+	public void updateContact(String id, String firstName, String lastName, String mobNum,
+			String homePh, String workPh, String emailAddress,
+			String homeAddress, String workAddress, String dateOfBirth) {
+		// TODO Auto-generated method stub
+		dbHelper.open();
+	    ContentValues newValues = new ContentValues();
+	    newValues.put(FIRST_NAME, firstName);
+	    newValues.put(LAST_NAME, lastName);
+	    newValues.put(MOBILE_PHONE, mobNum);
+	    newValues.put(HOME_PHONE, homePh);
+	    newValues.put(WORK_PHONE, workPh);
+	    newValues.put(EMAIL, emailAddress);
+	    newValues.put(HOME_ADDRESS, homeAddress);
+	    newValues.put(WORK_ADDRESS, workAddress);
+	    newValues.put(DOB, dateOfBirth);
+	    
+	    contactsDb.update(TABLE_CONTACTS, newValues, CONTACTS_ID + "=" + id, null);
+	}
+
 //
 //	public Cursor queueAll() {
 //		String[] columns = {CONTACTS_ID, FIRST_NAME, LAST_NAME, MOBILE_PHONE, HOME_PHONE, WORK_PHONE,

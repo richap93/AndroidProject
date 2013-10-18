@@ -45,6 +45,7 @@ public class ViewContact extends Activity {
 			setTitle(fullName);
 			populateView(c);
 		}
+		
 
 	}
 
@@ -121,6 +122,13 @@ public class ViewContact extends Activity {
 			
 			Toast.makeText(this,contact.getName() + " saved to favourites" , Toast.LENGTH_LONG).show();
 			finish();
+			
+		} else if (item.getItemId() == R.id.edit_icon) {
+			
+			Intent i = new Intent();
+			i.putExtra("ID", id);
+			i.setClass(ViewContact.this, EditContact.class);
+			startActivity(i);
 			
 		}
 

@@ -6,14 +6,19 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-	
 		
+	<item 
+          android:id="@+id/edit_icon"
+		  android:title="Add to favourites"
+		  android:icon="@drawable/edit_icon"
+		  android:showAsAction="always"
+		  android:orderInCategory="50"/> 
 	<item 
           android:id="@+id/favourites_icon"
 		  android:title="Add to favourites"
 		  android:icon="@drawable/favourites_icon"
 		  android:showAsAction="always"
-		  android:orderInCategory="50"/> 
+		  android:orderInCategory="51"/> 
 	
 	<item 
         android:id="@+id/delete_contact"

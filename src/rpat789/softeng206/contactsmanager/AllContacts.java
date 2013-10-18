@@ -41,8 +41,8 @@ public class AllContacts extends Fragment {
 		getActivity().startManagingCursor(cursor);
 
 		//add stuff to listView
-		String[] from = new String[] {dbHelper.FIRST_NAME, dbHelper.MOBILE_PHONE, dbHelper.CONTACTS_ID};
-		int[] to = new int[]{R.id.list_item_text_contact, R.id.list_item_text_number, R.id.contact_id}; 
+		String[] from = new String[] {dbHelper.FIRST_NAME, dbHelper.LAST_NAME, dbHelper.MOBILE_PHONE, dbHelper.CONTACTS_ID};
+		int[] to = new int[]{R.id.list_item_text_contact_first, R.id.list_item_text_contact_last,  R.id.list_item_text_number, R.id.contact_id}; 
 
 		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_list_view, cursor, from, to);
 
@@ -95,9 +95,10 @@ public class AllContacts extends Fragment {
 		//populate list view and set an adapter to it
 		return rootView;
 	}
+}
 
 
-	public void setUpListView() {
+//	public void setUpListView() {
 		//		adapter.open();
 		//		adapter.deleteAll();
 		//		adapter.insertContact("Richa", "Patel", "0211095202", "6257766", "123456", "abc@gmail.com", "Home sweet home", "Google", "5/7/93");
@@ -123,41 +124,39 @@ public class AllContacts extends Fragment {
 		//		listView.setAdapter(listAdapter);
 
 
-	} 
+//	} 
 
-	private class CustomListAdapter extends ArrayAdapter<Contact> {
-
-		private Context context;
-		private List<Contact> contacts;
-
-		CustomListAdapter(Context context, List<Contact> contacts) {
-			super(context, android.R.layout.simple_list_item_1 ,contacts);
-
-			this.context = context;
-			this.contacts = contacts;
-
-		}
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-
-			//Create a layout inflater  to inflate our xml layout for each item in the list
-			LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			//Inflate the list item layout. Keep a reference to the inflated view. Note there is no view root specified
-			View listItemView = inflater.inflate(R.layout.custom_list_view, null);
-
-			//Access textview elements inside the view (Note we must specify the parent view to look in)
-			TextView contactName = (TextView)listItemView.findViewById(R.id.list_item_text_contact);
-			TextView number = (TextView)listItemView.findViewById(R.id.list_item_text_number);
+//	private class CustomListAdapter extends ArrayAdapter<Contact> {
+//
+//		private Context context;
+//		private List<Contact> contacts;
+//
+//		CustomListAdapter(Context context, List<Contact> contacts) {
+//			super(context, android.R.layout.simple_list_item_1 ,contacts);
+//
+//			this.context = context;
+//			this.contacts = contacts;
+//
+//		}
+//	}
+//		public View getView(int position, View convertView, ViewGroup parent) {
+//
+//			//Create a layout inflater  to inflate our xml layout for each item in the list
+//			LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//			//Inflate the list item layout. Keep a reference to the inflated view. Note there is no view root specified
+//			View listItemView = inflater.inflate(R.layout.custom_list_view, null);
+//
+//			//Access textview elements inside the view (Note we must specify the parent view to look in)
+//			TextView contactName = (TextView)listItemView.findViewById(R.id.list_item_text_contact);
+//			TextView number = (TextView)listItemView.findViewById(R.id.list_item_text_number);
 
 			//Set the text for each textview(use the position argument to find the appropriate element in the list)
-			contactName.setText(contacts.get(position).getName());
-			number.setText(contacts.get(position).getMobNumber());
+//			contactName.setText(contacts.get(position).getName());
+//			number.setText(contacts.get(position).getMobNumber());
 
-			return listItemView;
-		}
+//			return listItemView;
+//		}
+//
+//	}
 
-	}
-
-
-}
