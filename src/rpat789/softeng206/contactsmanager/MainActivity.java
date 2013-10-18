@@ -25,8 +25,8 @@ public class MainActivity extends Activity {
 
 	ActionBar.Tab Tab1, Tab2, Tab3;
 	Fragment fragmentTab1 = new AllContacts();
-	Fragment fragmentTab2 = new Groups();
-	Fragment fragmentTab3 = new Favourites();
+	Fragment fragmentTab3 = new Groups();
+	Fragment fragmentTab2 = new Favourites();
 	AlertDialog levelDialog;
 	ContactsDatabaseHelper dbHelper;
 	Cursor c;
@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
  
         // Set Tab Icon and Titles
         Tab1 = actionBar.newTab().setText("All Contacts");
-        Tab2 = actionBar.newTab().setText("Groups");
-        Tab3 = actionBar.newTab().setText("Favourites");
+        Tab3 = actionBar.newTab().setText("Groups");
+        Tab2 = actionBar.newTab().setText("Favourites");
         
  
         // Set Tab Listeners
