@@ -8,9 +8,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ public class ViewContact extends Activity {
 	String id;
 	List<TextView> tvs = new ArrayList<TextView>();
 	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
+	ImageButton mobileButton, homeButton, workButton, textMobile;
 
 	
 	@Override
@@ -46,6 +51,57 @@ public class ViewContact extends Activity {
 			populateView(c);
 		}
 		
+		mobileButton = (ImageButton)findViewById(R.id.call_mobile);
+		homeButton = (ImageButton)findViewById(R.id.call_home);
+		workButton = (ImageButton)findViewById(R.id.call_work);
+		textMobile = (ImageButton)findViewById(R.id.message_mobile);
+		
+		mobileButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent callIntent = new Intent(Intent.ACTION_CALL);
+				String mob = mobile.getText().toString();
+			    callIntent.setData(Uri.parse("tel:"+mob));
+			    startActivity(callIntent);
+			}
+		});
+		
+		homeButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent callIntent = new Intent(Intent.ACTION_CALL);
+				String mob = homeNum.getText().toString();
+			    callIntent.setData(Uri.parse("tel:"+homeNum));
+			    startActivity(callIntent);
+			}
+		});
+		
+		workButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent callIntent = new Intent(Intent.ACTION_CALL);
+				String mob = workNum.getText().toString();
+			    callIntent.setData(Uri.parse("tel:"+workNum));
+			    startActivity(callIntent);
+			}
+		});
+
+		textMobile.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String mob = mobile.getText().toString();
+				Intent toSend = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + mob));
+				startActivity(toSend);
+			}
+		});
 
 	}
 
