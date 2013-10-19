@@ -30,13 +30,13 @@ public class Favourites extends Fragment implements SortListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.activity_favourites, container, false);
+		View rootView = inflater.inflate(R.layout.activity_main, container, false);
 		super.onCreate(savedInstanceState);
 
 		dbHelper = ContactsDatabaseHelper.getDatabase(getActivity());
 		dbHelper.addSortListener(this);
 
-		listView = (ListView)rootView.findViewById(R.id.favourites_listView);
+		listView = (ListView)rootView.findViewById(R.id.main_listView);
 		refresh();
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -101,7 +101,6 @@ public class Favourites extends Fragment implements SortListener {
 		to = new int[]{R.id.list_item_text_contact_first, R.id.list_item_text_contact_last,  R.id.list_item_text_number, R.id.contact_id}; 
 
 		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_list_view, cursor, from, to);
-
 
 		listView.setAdapter(cursorAdapter);
 	}

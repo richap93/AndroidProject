@@ -108,6 +108,7 @@ public class EditContact extends Activity {
 		email = (TextView)findViewById(R.id.item_email_addr);
 		birthday = (TextView)findViewById(R.id.birthday);	
 		group = (Spinner)findViewById(R.id.group_spinner);
+		
 	}
 	
 	private void setUpContactButton() {
@@ -149,6 +150,8 @@ public class EditContact extends Activity {
 			String workAddress = workAdd.getText().toString();
 			String emailAddress = email.getText().toString();
 			String dateOfBirth = birthday.getText().toString();
+			String groupName = group.getSelectedItem().toString();
+
 			
 			if (firstName.equals("")) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -159,7 +162,7 @@ public class EditContact extends Activity {
 			} else {
 				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(EditContact.this);
 //				entry.open();
-				entry.updateContact(id, firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
+				entry.updateContact(id, firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth, groupName);
 //				entry.
 				EditContact.this.finish();
 			}

@@ -27,7 +27,7 @@ public class ViewContact extends Activity {
 	String id;
 	List<TextView> tvs = new ArrayList<TextView>();
 	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
-	ImageButton mobileButton, homeButton, workButton, textMobile;
+	ImageButton mobileButton, homeButton, workButton, textMobile, contactImage;
 
 	
 	@Override
@@ -55,6 +55,7 @@ public class ViewContact extends Activity {
 		homeButton = (ImageButton)findViewById(R.id.call_home);
 		workButton = (ImageButton)findViewById(R.id.call_work);
 		textMobile = (ImageButton)findViewById(R.id.message_mobile);
+//		contactImage = (ImageButton)findViewById(R.id.)
 		
 		mobileButton.setOnClickListener(new View.OnClickListener() {
 			

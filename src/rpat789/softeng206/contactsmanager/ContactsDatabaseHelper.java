@@ -38,6 +38,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public static final String DOB = "dob";
 	public static final String FAVOURITES = "favourites";
 	public static final String GROUPS = "groups";
+	public static final String IMAGE_PATH = "image";
 
 	//		public static final String PHOTO = "photo";
 
@@ -54,7 +55,8 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			+ WORK_ADDRESS + " TEXT, " 
 			+ DOB + " TEXT, " 
 			+ FAVOURITES + " INTEGER, " 
-			+ GROUPS + " TEXT);";
+			+ GROUPS + " TEXT, " 
+			+ IMAGE_PATH + " TEXT);";
 	
 	private List<SortListener> listeners = new ArrayList<SortListener>();
 	private String sortOrder = null;
@@ -102,7 +104,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	//	}
 
 	public long insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
-			String homeAdd, String workAdd, String dob, String group) {
+			String homeAdd, String workAdd, String dob, String group, String imagePath) {
 		
 		dbHelper.open();
 		
@@ -118,7 +120,8 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		cv.put(DOB, dob);
 		cv.put(FAVOURITES, 0);
 		cv.put(GROUPS, group);
-
+		cv.put(IMAGE_PATH, imagePath);
+		
 		Log.d("testing", "group inserted is" + group);
 		return contactsDb.insert(TABLE_CONTACTS, null, cv);
 
@@ -186,7 +189,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
 	public void updateContact(String id, String firstName, String lastName, String mobNum,
 			String homePh, String workPh, String emailAddress,
-			String homeAddress, String workAddress, String dateOfBirth) {
+			String homeAddress, String workAddress, String dateOfBirth, String groupName) {
 		// TODO Auto-generated method stub
 		dbHelper.open();
 	    ContentValues newValues = new ContentValues();
@@ -199,6 +202,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	    newValues.put(HOME_ADDRESS, homeAddress);
 	    newValues.put(WORK_ADDRESS, workAddress);
 	    newValues.put(DOB, dateOfBirth);
+	    newValues.put(GROUPS, groupName);
 	    
 	    contactsDb.update(TABLE_CONTACTS, newValues, CONTACTS_ID + "=" + id, null);
 	}

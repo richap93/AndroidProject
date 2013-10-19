@@ -30,11 +30,12 @@ public class Groups extends Fragment implements SortListener {
 	private ContactsDatabaseHelper dbHelper;
 	private String[] from;
 	private int[] to;
+	boolean isGroupList;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View rootView = inflater.inflate(R.layout.activity_groups, container, false);
-		
+		isGroupList = true;
 		lvGroups = (ListView)rootView.findViewById(R.id.groups_listView);
 		
 		dbHelper = ContactsDatabaseHelper.getDatabase(getActivity());
@@ -46,10 +47,12 @@ public class Groups extends Fragment implements SortListener {
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int clickedViewPosition, long id) {
 				// TODO Auto-generated method stub
 
-				String groupSelected = groupOptions.get(clickedViewPosition);
-				group = groupSelected;
-//				
-				refresh();
+				if (isGroupList) {
+					String groupSelected = groupOptions.get(clickedViewPosition);
+					group = groupSelected;
+					refresh();
+					isGroupList = false;
+				}
 			}
 		});
 
@@ -98,6 +101,26 @@ public class Groups extends Fragment implements SortListener {
 		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_list_view, cursor, from, to);
 
 		lvGroups.setAdapter(cursorAdapter);
+		
+		lvGroups.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parentView, View clickedView, int clickedViewPosition, long id) {
+				// TODO Auto-generated method stub
+				ViewGroup group = (ViewGroup)clickedView;
+
+				//get the first name in that view
+				View contactId = group.findViewById(R.id.contact_id);
+
+				TextView fId = (TextView)contactId;
+
+				String idNum = fId.getText().toString();
+				Intent i = new Intent();
+				i.putExtra("ID", idNum);
+				i.setClass(getActivity(), ViewContact.class);
+				startActivity(i);
+
+			}
+		});
 
 	}
 }

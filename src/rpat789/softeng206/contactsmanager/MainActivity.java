@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -110,7 +111,7 @@ public class MainActivity extends Activity {
 			
 		} else if (item.getItemId() == R.id.sort_button) {
 			
-			//Radio button dialog box for sontact sort options
+			//Radio button dialog box for contact sort options
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 			dialogBuilder.setTitle("Sort");
 			dialogBuilder.setSingleChoiceItems(R.array.sort_options, -1, new DialogInterface.OnClickListener() {
@@ -128,6 +129,9 @@ public class MainActivity extends Activity {
 
 				        case 1:
 				        	//Sort by last name selected
+				        	if (dbHelper == null) {
+				        		Log.d("testing", "DB is null");
+				        	}
 				        	dbHelper.sortContacts("lastName");
 				            break;
 				            
