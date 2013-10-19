@@ -56,6 +56,8 @@ public class AddContact extends Activity {
 
 	}
 
+	
+	
 	private void setTextViews() {
 
 		fName = (TextView)findViewById(R.id.first_name);

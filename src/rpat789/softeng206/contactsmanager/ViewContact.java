@@ -30,7 +30,7 @@ public class ViewContact extends Activity {
 	List<TextView> tvs = new ArrayList<TextView>();
 	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
 	ImageButton mobileButton, homeButton, workButton, textMobile;
-	ImageView contactImage;
+	ImageView image;
 	
 	
 	@Override
@@ -119,7 +119,7 @@ public class ViewContact extends Activity {
 		homeAdd = (TextView)findViewById(R.id.list_home_address);
 		workAdd = (TextView)findViewById(R.id.list_work_address);	
 		birthday = (TextView)findViewById(R.id.list_item_DOB);
-		contactImage = (ImageView)findViewById(R.id.contact_image);
+		image = (ImageView)findViewById(R.id.contact_image_view);
 		
 		//Populate list of TextViews
 		tvs.add(mobile);
@@ -130,15 +130,15 @@ public class ViewContact extends Activity {
 		tvs.add(workAdd);
 		tvs.add(birthday);
 		
-		c.moveToFirst();
-		byte[] image = c.getBlob(12);
+//		c.moveToFirst();
+		byte[] contactImage = c.getBlob(12);
 		
-		Bitmap bm = BitmapFactory.decodeByteArray(image, 0, image.length);
-		bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth());
+		Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
+		bm = Bitmap.createBitmap(bm, 20, 0, bm.getWidth(), 107);
 		if (contactImage != null) {
-			contactImage.setImageBitmap(bm);
+			image.setImageBitmap(bm);
 		} else {
-			contactImage.setImageResource(R.drawable.contact_photo);
+			image.setImageResource(R.drawable.view_contact_icon);
 		}
 		
 		//Set text for all the TextViews

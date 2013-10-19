@@ -44,10 +44,12 @@ public class CursorListAdapter extends CursorAdapter {
 
 		byte[] contactImage = cursor.getBlob(12);
 		
-		Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
-		bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth());
+		
 		if (contactImage != null) {
+			Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
+			bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth());
 			image.setImageBitmap(bm);
+			
 			
 		} else {
 			image.setImageResource(R.drawable.contact_photo);

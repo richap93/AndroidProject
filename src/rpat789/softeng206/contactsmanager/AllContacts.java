@@ -76,6 +76,7 @@ public class AllContacts extends Fragment implements SortListener {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		refresh();
 
 	}
 
