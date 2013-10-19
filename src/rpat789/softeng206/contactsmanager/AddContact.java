@@ -1,12 +1,19 @@
 package rpat789.softeng206.contactsmanager;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +43,8 @@ public class AddContact extends Activity {
 	Bitmap bmp;
 	String selectedImagePath;
 	ImageButton image;
+	byte[] photo = null;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,16 +111,68 @@ public class AddContact extends Activity {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
-			Log.d("testing", "Yay it works!");
-			Uri selectedImageUri = data.getData();
+			
 			Bundle extras = data.getExtras();
 			Bitmap bmp = (Bitmap) extras.get("data");
-			selectedImagePath = getPath(selectedImageUri);
-			Log.d("testing", selectedImagePath);
+			
+//			BitmapDrawable b = (BitmapDrawable)image.getDrawable();
+//			Bitmap bmp = b.getBitmap();
+			Uri selectedImageUri = data.getData();
+
+			
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
+			photo = stream.toByteArray();
+			
+			
+			
+			
+//			selectedImagePath = getPath(selectedImageUri);
+//			Log.d("testing", selectedImagePath);
+
+			//			COMPRESSION - TAZZY'S WAY
+			//			FileOutputStream v;
+			//			try {
+			//				v = new FileOutputStream(new File(selectedImagePath));
+			//				bmp.compress(Bitmap.CompressFormat.PNG, 100, v);
+			//				v.close();
+			//			} catch (FileNotFoundException e) {
+			//				// TODO Auto-generated catch block
+			//				e.printStackTrace();
+			//			} catch (IOException e) {
+			//				// TODO Auto-generated catch block
+			//				e.printStackTrace();
+			//			}
+//			bmp = decodeFile(new File(selectedImagePath));
 			image.setImageBitmap(bmp);
+
 
 		}
 	}
+
+//	private Bitmap decodeFile(File f){
+//		try {
+//			//Decode image size
+//			BitmapFactory.Options o = new BitmapFactory.Options();
+//			o.inJustDecodeBounds = true;
+//			BitmapFactory.decodeStream(new FileInputStream(f),null,o);
+//
+//			//The new size we want to scale to
+//			final int REQUIRED_SIZE=50;
+//
+//			//Find the correct scale value. It should be the power of 2.
+//			int scale=1;
+//			while(o.outWidth/scale/2>=REQUIRED_SIZE && o.outHeight/scale/2>=REQUIRED_SIZE)
+//				scale*=2;
+//
+//			//Decode with inSampleSize
+//			BitmapFactory.Options o2 = new BitmapFactory.Options();
+//			o2.inSampleSize=scale;
+//			Log.d("testing", "YAY!");
+//			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+//		} catch (FileNotFoundException e) {}
+//		return null;
+//	}
 
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
@@ -144,7 +205,7 @@ public class AddContact extends Activity {
 			String emailAddress = email.getText().toString();
 			String dateOfBirth = birthday.getText().toString();
 			String groupName = group.getSelectedItem().toString();
-			
+
 			if (firstName.equals("")) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle("Error");
@@ -153,7 +214,7 @@ public class AddContact extends Activity {
 				AlertDialog dialog = builder.show();
 			} else {
 				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(AddContact.this);
-				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth, groupName, selectedImagePath);
+				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth, groupName, photo);
 				Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
 				AddContact.this.finish();
 			}

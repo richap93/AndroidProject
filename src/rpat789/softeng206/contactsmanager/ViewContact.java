@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,20 +17,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewContact extends Activity {
 	
-	private Contact contact;
 	private ContactsDatabaseHelper dbHelper;
 	private String fName, lName, fullName;
 	Cursor c;
 	String id;
 	List<TextView> tvs = new ArrayList<TextView>();
 	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
-	ImageButton mobileButton, homeButton, workButton, textMobile, contactImage;
-
+	ImageButton mobileButton, homeButton, workButton, textMobile;
+	ImageView contactImage;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +119,7 @@ public class ViewContact extends Activity {
 		homeAdd = (TextView)findViewById(R.id.list_home_address);
 		workAdd = (TextView)findViewById(R.id.list_work_address);	
 		birthday = (TextView)findViewById(R.id.list_item_DOB);
+		contactImage = (ImageView)findViewById(R.id.contact_image);
 		
 		//Populate list of TextViews
 		tvs.add(mobile);
@@ -125,6 +129,17 @@ public class ViewContact extends Activity {
 		tvs.add(homeAdd);
 		tvs.add(workAdd);
 		tvs.add(birthday);
+		
+		c.moveToFirst();
+		byte[] image = c.getBlob(12);
+		
+		Bitmap bm = BitmapFactory.decodeByteArray(image, 0, image.length);
+		bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth());
+		if (contactImage != null) {
+			contactImage.setImageBitmap(bm);
+		} else {
+			contactImage.setImageResource(R.drawable.contact_photo);
+		}
 		
 		//Set text for all the TextViews
 		TextView tv;

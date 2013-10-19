@@ -27,6 +27,7 @@ public class AllContacts extends Fragment implements SortListener {
 	private String[] from;
 	private int[] to;
 	private String sortOrder = "firstName";
+	CursorListAdapter clAdapter;
 
 
 	@Override
@@ -98,15 +99,16 @@ public class AllContacts extends Fragment implements SortListener {
 		cursor = dbHelper.getAllData(sortOrder);
 		//	}
 
-		getActivity().startManagingCursor(cursor);
+//		getActivity().startManagingCursor(cursor);
+		cursor.moveToFirst();
 
 		//add stuff to listView
-		from = new String[] {dbHelper.FIRST_NAME, dbHelper.LAST_NAME, dbHelper.MOBILE_PHONE, dbHelper.CONTACTS_ID, dbHelper.IMAGE_PATH};
-		to = new int[]{R.id.list_item_text_contact_first, R.id.list_item_text_contact_last,  R.id.list_item_text_number, R.id.contact_id, R.id.contact_image}; 
+//		from = new String[] {dbHelper.FIRST_NAME, dbHelper.LAST_NAME, dbHelper.MOBILE_PHONE, dbHelper.CONTACTS_ID, dbHelper.IMAGE};
+//		to = new int[]{R.id.list_item_text_contact_first, R.id.list_item_text_contact_last,  R.id.list_item_text_number, R.id.contact_id, R.id.contact_image}; 
 
-		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_list_view, cursor, from, to);
+		clAdapter = new CursorListAdapter(getActivity(), cursor);
 
-		listView.setAdapter(cursorAdapter);
+		listView.setAdapter(clAdapter);
 	}
 }
 

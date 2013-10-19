@@ -1,5 +1,6 @@
 package rpat789.softeng206.contactsmanager;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public static final String DOB = "dob";
 	public static final String FAVOURITES = "favourites";
 	public static final String GROUPS = "groups";
-	public static final String IMAGE_PATH = "image";
+	public static final String IMAGE = "image";
 
 	//		public static final String PHOTO = "photo";
 
@@ -56,7 +57,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			+ DOB + " TEXT, " 
 			+ FAVOURITES + " INTEGER, " 
 			+ GROUPS + " TEXT, " 
-			+ IMAGE_PATH + " TEXT);";
+			+ IMAGE + " BLOB);";
 	
 	private List<SortListener> listeners = new ArrayList<SortListener>();
 	private String sortOrder = null;
@@ -104,7 +105,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	//	}
 
 	public long insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
-			String homeAdd, String workAdd, String dob, String group, String imagePath) {
+			String homeAdd, String workAdd, String dob, String group, byte[] image) {
 		
 		dbHelper.open();
 		
@@ -120,8 +121,8 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		cv.put(DOB, dob);
 		cv.put(FAVOURITES, 0);
 		cv.put(GROUPS, group);
-		cv.put(IMAGE_PATH, imagePath);
-		
+		cv.put(IMAGE, image);
+				
 		Log.d("testing", "group inserted is" + group);
 		return contactsDb.insert(TABLE_CONTACTS, null, cv);
 
