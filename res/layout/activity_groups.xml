@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:paddingTop="5dp"
     tools:context=".MainActivity" >
-
     
     <ListView
   	  android:id="@+id/groups_listView"

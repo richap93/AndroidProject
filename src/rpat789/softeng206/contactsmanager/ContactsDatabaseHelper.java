@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
@@ -101,9 +102,9 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	//	}
 
 	public long insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
-			String homeAdd, String workAdd, String dob) {
+			String homeAdd, String workAdd, String dob, String group) {
 		
-		open();
+		dbHelper.open();
 		
 		ContentValues cv = new ContentValues();
 		cv.put(FIRST_NAME, first);
@@ -116,7 +117,9 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		cv.put(WORK_ADDRESS, workAdd);
 		cv.put(DOB, dob);
 		cv.put(FAVOURITES, 0);
+		cv.put(GROUPS, group);
 
+		Log.d("testing", "group inserted is" + group);
 		return contactsDb.insert(TABLE_CONTACTS, null, cv);
 
 	}
@@ -136,6 +139,13 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public Cursor getFavoritesData(String orderType) {
 		dbHelper.open();
 		return contactsDb.query(TABLE_CONTACTS, null, FAVOURITES + "= 1", null, null, null, orderType);
+	}
+
+	public Cursor getGroupData(String groupName, String orderType) {
+		// TODO Auto-generated method stub
+		dbHelper.open();
+		Log.d("testing", "GROUP SELECTED IS "+ groupName);
+		return contactsDb.query(TABLE_CONTACTS, null, GROUPS + "= ?", new String[]{groupName}, null, null, null, null);
 	}
 
 	public int deleteAll(){
@@ -193,26 +203,26 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	    contactsDb.update(TABLE_CONTACTS, newValues, CONTACTS_ID + "=" + id, null);
 	}
 
-	public Cursor sortByFirstName() {
-		// TODO Auto-generated method stub
-		dbHelper.open();
-		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, FIRST_NAME);		
-		return cursor;
-	}
-	
-	public Cursor sortByLastName() {
-		// TODO Auto-generated method stub
-		dbHelper.open();
-		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, LAST_NAME);		
-		return cursor;
-	}
-	
-	public Cursor sortByNumber() {
-		// TODO Auto-generated method stub
-		dbHelper.open();
-		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, MOBILE_PHONE);		
-		return cursor;
-	}
+//	public Cursor sortByFirstName() {
+//		// TODO Auto-generated method stub
+//		dbHelper.open();
+//		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, FIRST_NAME);		
+//		return cursor;
+//	}
+//	
+//	public Cursor sortByLastName() {
+//		// TODO Auto-generated method stub
+//		dbHelper.open();
+//		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, LAST_NAME);		
+//		return cursor;
+//	}
+//	
+//	public Cursor sortByNumber() {
+//		// TODO Auto-generated method stub
+//		dbHelper.open();
+//		Cursor cursor = contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, MOBILE_PHONE);		
+//		return cursor;
+//	}
 	
 	public void sortContacts(String order) {
 		// TODO Auto-generated method stub
@@ -236,6 +246,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			l.OrderChanged(event);
 		}
 	}
+
 
 
 

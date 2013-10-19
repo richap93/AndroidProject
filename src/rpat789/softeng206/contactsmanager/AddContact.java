@@ -1,17 +1,16 @@
 package rpat789.softeng206.contactsmanager;
 
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +26,7 @@ public class AddContact extends Activity {
 	TextView workAdd;
 	TextView email;
 	TextView birthday;
+	Spinner group;
 //	TextView contactId;
 	
 	@Override
@@ -49,7 +49,8 @@ public class AddContact extends Activity {
 		homeAdd = (TextView)findViewById(R.id.item_home_addr);
 		workAdd = (TextView)findViewById(R.id.item_work_addr);	
 		email = (TextView)findViewById(R.id.item_email_addr);
-		birthday = (TextView)findViewById(R.id.birthday);	
+		birthday = (TextView)findViewById(R.id.birthday);
+		group = (Spinner)findViewById(R.id.group_spinner);
 //		contactId = (TextView)findViewById(R.id.contact_id);
 	}
 	
@@ -101,6 +102,7 @@ public class AddContact extends Activity {
 			String workAddress = workAdd.getText().toString();
 			String emailAddress = email.getText().toString();
 			String dateOfBirth = birthday.getText().toString();
+			String groupName = group.getSelectedItem().toString();
 			
 			if (firstName.equals("")) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -111,7 +113,8 @@ public class AddContact extends Activity {
 			} else {
 				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(AddContact.this);
 //				entry.open();
-				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth);
+				Log.d("testing", "GROUP added to is" + groupName);
+				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth, groupName);
 //				entry.
 				Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
 				AddContact.this.finish();

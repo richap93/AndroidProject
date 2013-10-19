@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class EditContact extends Activity {
 	TextView birthday;
 	Cursor c;
 	String id;
+	Spinner group;
 	private ContactsDatabaseHelper dbHelper;
 	private String firstName, lastName, fullName;
 	List<TextView> tvs = new ArrayList<TextView>();
@@ -38,7 +40,7 @@ public class EditContact extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.edit_contact);
+		setContentView(R.layout.add_contact);
 		setUpContactButton();
 		setTextViews();
 		
@@ -70,6 +72,8 @@ public class EditContact extends Activity {
 		homeAdd = (TextView)findViewById(R.id.item_home_addr);
 		workAdd = (TextView)findViewById(R.id.item_work_addr);	
 		birthday = (TextView)findViewById(R.id.birthday);
+		group = (Spinner)findViewById(R.id.group_spinner);
+
 		
 		//Populate list of TextViews
 		tvs.add(fName);
@@ -103,7 +107,7 @@ public class EditContact extends Activity {
 		workAdd = (TextView)findViewById(R.id.item_work_addr);	
 		email = (TextView)findViewById(R.id.item_email_addr);
 		birthday = (TextView)findViewById(R.id.birthday);	
-//			contactId = (TextView)findViewById(R.id.contact_id);
+		group = (Spinner)findViewById(R.id.group_spinner);
 	}
 	
 	private void setUpContactButton() {

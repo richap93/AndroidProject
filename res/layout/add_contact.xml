@@ -31,6 +31,7 @@
 	        android:id="@+id/first_name"
 	        android:layout_width="fill_parent"
 	        android:layout_marginLeft="85dip"
+	        android:inputType="textCapWords"
 	        android:layout_height="wrap_content"
 	        android:hint="First name" />  
 	        
@@ -38,6 +39,7 @@
 	        android:id="@+id/last_name"
 	        android:layout_width="fill_parent"
 	        android:layout_marginLeft="85dip"
+	        android:inputType="textCapWords"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/first_name"
 	        android:hint="Last name" /> 
@@ -116,6 +118,7 @@
 	        android:id="@+id/item_home_addr"
 	        android:layout_width="fill_parent"
 	        android:layout_marginLeft="65dip"
+	        android:inputType="textCapWords"
 	        android:layout_alignBaseline="@id/home_addr_subheading"
 	        android:layout_height="wrap_content"/>
 		 
