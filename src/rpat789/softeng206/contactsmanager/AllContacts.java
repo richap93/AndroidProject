@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,9 @@ public class AllContacts extends Fragment implements SortListener {
 	public void OrderChanged(SortEvent se) {
 		// TODO Auto-generated method stub
 		sortOrder = se.getOrder();
-		refresh();
+		if (getActivity() != null) {
+			refresh();
+		}
 
 	}
 
