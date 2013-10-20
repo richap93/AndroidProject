@@ -119,6 +119,11 @@
 	    	android:layout_below="@id/list_item_email"
 	        android:text="ADDRESS" />
 	    
+	    <ImageButton
+	        android:id="@+id/email_icon"
+	        style="@style/MessageIcon"
+	        android:layout_below="@id/under_email_line" />
+	    
 	    <ImageView
 	        android:id="@+id/under_address_line"
 		    android:layout_below="@id/list_address_email"

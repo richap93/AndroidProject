@@ -29,7 +29,7 @@ public class ViewContact extends Activity {
 	String id;
 	List<TextView> tvs = new ArrayList<TextView>();
 	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
-	ImageButton mobileButton, homeButton, workButton, textMobile;
+	ImageButton mobileButton, homeButton, workButton, textMobile, emailContact;
 	ImageView image;
 	
 	
@@ -58,6 +58,8 @@ public class ViewContact extends Activity {
 		homeButton = (ImageButton)findViewById(R.id.call_home);
 		workButton = (ImageButton)findViewById(R.id.call_work);
 		textMobile = (ImageButton)findViewById(R.id.message_mobile);
+		emailContact = (ImageButton)findViewById(R.id.email_icon);
+
 //		contactImage = (ImageButton)findViewById(R.id.)
 		
 		mobileButton.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +106,21 @@ public class ViewContact extends Activity {
 				String mob = mobile.getText().toString();
 				Intent toSend = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + mob));
 				startActivity(toSend);
+			}
+		});
+		
+		emailContact.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String emailAdd = email.getText().toString();
+				if (!(emailAdd.equals(""))) {
+					Intent intent = new Intent(Intent.ACTION_SEND);
+					intent.setType("plain/text");
+					intent.putExtra(Intent.EXTRA_EMAIL, new String[] { emailAdd });
+					startActivity(Intent.createChooser(intent, ""));
+				}
 			}
 		});
 
