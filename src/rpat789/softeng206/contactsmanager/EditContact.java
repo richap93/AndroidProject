@@ -1,5 +1,6 @@
 package rpat789.softeng206.contactsmanager;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +39,9 @@ public class EditContact extends Activity {
 	private ContactsDatabaseHelper dbHelper;
 	private String firstName, lastName, fullName;
 	List<TextView> tvs = new ArrayList<TextView>();
-	
+	ImageButton image;
+	byte[] photo = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -73,6 +79,7 @@ public class EditContact extends Activity {
 		workAdd = (TextView)findViewById(R.id.item_work_addr);	
 		birthday = (TextView)findViewById(R.id.birthday);
 		group = (Spinner)findViewById(R.id.group_spinner);
+		image = (ImageButton)findViewById(R.id.contact_image);
 
 		
 		//Populate list of TextViews
@@ -85,6 +92,19 @@ public class EditContact extends Activity {
 		tvs.add(homeAdd);
 		tvs.add(workAdd);
 		tvs.add(birthday);
+		
+		
+		c.moveToFirst();
+		byte[] contactImage = c.getBlob(12);
+		
+
+		if (contactImage != null) {
+			Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
+			bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth());
+			image.setImageBitmap(bm);
+		} else {
+			image.setImageResource(R.drawable.contact_photo);
+		}
 		
 		//Set text for all the TextViews
 		TextView tv;
@@ -126,7 +146,16 @@ public class EditContact extends Activity {
 				    @Override
 				    public void onClick(DialogInterface dialog, int which) {
 				        // the user clicked on sort_options[which]
-				    }
+				    	switch (which) {
+						case 0:
+							Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+							startActivityForResult(intent, 0);
+
+						case 1:
+
+						}
+
+					}
 				});
 				dialogBuilder.create().show();
 			}
@@ -134,6 +163,50 @@ public class EditContact extends Activity {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			
+			Bundle extras = data.getExtras();
+			Bitmap bmp = (Bitmap) extras.get("data");
+			
+//			BitmapDrawable b = (BitmapDrawable)image.getDrawable();
+//			Bitmap bmp = b.getBitmap();
+			Uri selectedImageUri = data.getData();
+
+			
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
+			photo = stream.toByteArray();
+			
+			
+			
+			
+//			selectedImagePath = getPath(selectedImageUri);
+//			Log.d("testing", selectedImagePath);
+
+			//			COMPRESSION - TAZZY'S WAY
+			//			FileOutputStream v;
+			//			try {
+			//				v = new FileOutputStream(new File(selectedImagePath));
+			//				bmp.compress(Bitmap.CompressFormat.PNG, 100, v);
+			//				v.close();
+			//			} catch (FileNotFoundException e) {
+			//				// TODO Auto-generated catch block
+			//				e.printStackTrace();
+			//			} catch (IOException e) {
+			//				// TODO Auto-generated catch block
+			//				e.printStackTrace();
+			//			}
+//			bmp = decodeFile(new File(selectedImagePath));
+			image.setImageBitmap(bmp);
+
+
+		}
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {

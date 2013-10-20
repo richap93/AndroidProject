@@ -31,10 +31,12 @@ public class Groups extends Fragment implements SortListener {
 	private String[] from;
 	private int[] to;
 	boolean isGroupList;
+	private CursorListAdapter clAdapter;
+	private View rootView;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.activity_groups, container, false);
+		rootView = inflater.inflate(R.layout.activity_groups, container, false);
 		isGroupList = true;
 		lvGroups = (ListView)rootView.findViewById(R.id.groups_listView);
 		
@@ -88,19 +90,10 @@ public class Groups extends Fragment implements SortListener {
 		cursor = dbHelper.getGroupData(group, sortOrder);
 		
 		cursor.moveToFirst();
-		Log.d("testing", "Group is " + group);
-		Log.d("testing", "Count is " + cursor.getCount());
 
-		getActivity().startManagingCursor(cursor);
-
-		//add stuff to listView
-		from = new String[] {dbHelper.FIRST_NAME, dbHelper.LAST_NAME, dbHelper.MOBILE_PHONE, dbHelper.CONTACTS_ID};
-		to = new int[]{R.id.list_item_text_contact_first, R.id.list_item_text_contact_last,  R.id.list_item_text_number, R.id.contact_id}; 
- 
+		clAdapter = new CursorListAdapter(getActivity(), cursor);
 		
-		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_list_view, cursor, from, to);
-
-		lvGroups.setAdapter(cursorAdapter);
+		lvGroups.setAdapter(clAdapter);
 		
 		lvGroups.setOnItemClickListener(new OnItemClickListener() {
 

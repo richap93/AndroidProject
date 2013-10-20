@@ -24,6 +24,7 @@ public class Favourites extends Fragment implements SortListener {
 	private String[] from;
 	private int[] to;
 	private String sortOrder = "firstName";
+	private CursorListAdapter clAdapter;
 
 
 	@Override
@@ -93,15 +94,10 @@ public class Favourites extends Fragment implements SortListener {
 		// TODO Auto-generated method stub
 		cursor = dbHelper.getFavoritesData(sortOrder);
 		//	}
+		cursor.moveToFirst();
 
-		getActivity().startManagingCursor(cursor);
+		clAdapter = new CursorListAdapter(getActivity(), cursor);
 
-		//add stuff to listView
-		from = new String[] {dbHelper.FIRST_NAME, dbHelper.LAST_NAME, dbHelper.MOBILE_PHONE, dbHelper.CONTACTS_ID};
-		to = new int[]{R.id.list_item_text_contact_first, R.id.list_item_text_contact_last,  R.id.list_item_text_number, R.id.contact_id}; 
-
-		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.custom_list_view, cursor, from, to);
-
-		listView.setAdapter(cursorAdapter);
+		listView.setAdapter(clAdapter);
 	}
 }
