@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 public class EditContact extends Activity {
 	
-	ImageButton imageButton;
 	TextView fName;
 	TextView lName;
 	TextView homeNum;
@@ -39,7 +39,7 @@ public class EditContact extends Activity {
 	private ContactsDatabaseHelper dbHelper;
 	private String firstName, lastName, fullName;
 	List<TextView> tvs = new ArrayList<TextView>();
-	ImageButton image;
+	ImageButton image, imageButton;
 	byte[] photo = null;
 
 	@Override
@@ -79,7 +79,6 @@ public class EditContact extends Activity {
 		workAdd = (TextView)findViewById(R.id.item_work_addr);	
 		birthday = (TextView)findViewById(R.id.birthday);
 		group = (Spinner)findViewById(R.id.group_spinner);
-		image = (ImageButton)findViewById(R.id.contact_image);
 
 		
 		//Populate list of TextViews
@@ -95,15 +94,12 @@ public class EditContact extends Activity {
 		
 		
 		c.moveToFirst();
-		byte[] contactImage = c.getBlob(12);
+		photo = c.getBlob(12);
 		
-
-		if (contactImage != null) {
-			Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
+		if (photo != null) {
+			Bitmap bm = BitmapFactory.decodeByteArray(photo, 0, photo.length);
 			bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth());
 			image.setImageBitmap(bm);
-		} else {
-			image.setImageResource(R.drawable.contact_photo);
 		}
 		
 		//Set text for all the TextViews
@@ -128,14 +124,16 @@ public class EditContact extends Activity {
 		email = (TextView)findViewById(R.id.item_email_addr);
 		birthday = (TextView)findViewById(R.id.birthday);	
 		group = (Spinner)findViewById(R.id.group_spinner);
-		
+
 	}
 	
 	private void setUpContactButton() {
 		
-		imageButton = (ImageButton)findViewById(R.id.contact_image);
-		
-		imageButton.setOnClickListener(new View.OnClickListener() {
+
+		image = (ImageButton)findViewById(R.id.contact_image);
+
+		image.setOnClickListener(new View.OnClickListener() {
+
 			
 			@Override
 			public void onClick(View v) {
@@ -183,28 +181,7 @@ public class EditContact extends Activity {
 			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
 			photo = stream.toByteArray();
 			
-			
-			
-			
-//			selectedImagePath = getPath(selectedImageUri);
-//			Log.d("testing", selectedImagePath);
-
-			//			COMPRESSION - TAZZY'S WAY
-			//			FileOutputStream v;
-			//			try {
-			//				v = new FileOutputStream(new File(selectedImagePath));
-			//				bmp.compress(Bitmap.CompressFormat.PNG, 100, v);
-			//				v.close();
-			//			} catch (FileNotFoundException e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			} catch (IOException e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			}
-//			bmp = decodeFile(new File(selectedImagePath));
 			image.setImageBitmap(bmp);
-
 
 		}
 	}
@@ -235,7 +212,7 @@ public class EditContact extends Activity {
 			} else {
 				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(EditContact.this);
 //				entry.open();
-				entry.updateContact(id, firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth, groupName);
+				entry.updateContact(id, firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth, groupName, photo);
 //				entry.
 				EditContact.this.finish();
 			}

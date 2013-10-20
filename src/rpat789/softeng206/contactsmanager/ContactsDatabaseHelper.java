@@ -191,7 +191,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
 	public void updateContact(String id, String firstName, String lastName, String mobNum,
 			String homePh, String workPh, String emailAddress,
-			String homeAddress, String workAddress, String dateOfBirth, String groupName) {
+			String homeAddress, String workAddress, String dateOfBirth, String groupName, byte[] image) {
 		// TODO Auto-generated method stub
 		dbHelper.open();
 	    ContentValues newValues = new ContentValues();
@@ -205,6 +205,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	    newValues.put(WORK_ADDRESS, workAddress);
 	    newValues.put(DOB, dateOfBirth);
 	    newValues.put(GROUPS, groupName);
+	    newValues.put(IMAGE, image);
 	    
 	    contactsDb.update(TABLE_CONTACTS, newValues, CONTACTS_ID + "=" + id, null);
 	}

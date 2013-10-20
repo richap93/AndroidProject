@@ -42,7 +42,6 @@ public class AddContact extends Activity {
 	//	TextView contactId;
 	Bitmap bmp;
 	String selectedImagePath;
-	ImageButton image;
 	byte[] photo = null;
 
 
@@ -55,8 +54,6 @@ public class AddContact extends Activity {
 		setTextViews();
 
 	}
-
-	
 	
 	private void setTextViews() {
 
@@ -70,7 +67,6 @@ public class AddContact extends Activity {
 		email = (TextView)findViewById(R.id.item_email_addr);
 		birthday = (TextView)findViewById(R.id.birthday);
 		group = (Spinner)findViewById(R.id.group_spinner);
-		image = (ImageButton)findViewById(R.id.contact_image);
 	}
 
 	private void setUpContactButton() {
@@ -146,7 +142,7 @@ public class AddContact extends Activity {
 			//				e.printStackTrace();
 			//			}
 //			bmp = decodeFile(new File(selectedImagePath));
-			image.setImageBitmap(bmp);
+			imageButton.setImageBitmap(bmp);
 
 
 		}
