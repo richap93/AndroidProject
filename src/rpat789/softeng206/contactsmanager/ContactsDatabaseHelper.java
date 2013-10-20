@@ -142,6 +142,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	
 	public Cursor getFavoritesData(String orderType) {
 		dbHelper.open();
+		Log.d("testing", "orderType is "+orderType);
 		return contactsDb.query(TABLE_CONTACTS, null, FAVOURITES + "= 1", null, null, null, orderType);
 	}
 
@@ -149,7 +150,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		// TODO Auto-generated method stub
 		dbHelper.open();
 		Log.d("testing", "GROUP SELECTED IS "+ groupName);
-		return contactsDb.query(TABLE_CONTACTS, null, GROUPS + "= ?", new String[]{groupName}, null, null, null, null);
+		return contactsDb.query(TABLE_CONTACTS, null, GROUPS + "= ?", new String[]{groupName}, null, null, orderType);
 	}
 
 	public int deleteAll(){

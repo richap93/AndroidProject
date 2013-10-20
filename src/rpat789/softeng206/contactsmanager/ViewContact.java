@@ -136,7 +136,7 @@ public class ViewContact extends Activity {
 
 		if (contactImage != null) {
 			Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
-			bm = Bitmap.createBitmap(bm, 0, 20, bm.getWidth(), (bm.getWidth()/2));
+			bm = Bitmap.createBitmap(bm, 0, 20, bm.getWidth(), (int) (bm.getWidth()*0.6));
 			image.setImageBitmap(bm);
 		} else {
 			image.setImageResource(R.drawable.view_contact_icon);

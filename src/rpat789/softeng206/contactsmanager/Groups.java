@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,13 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class Groups extends Fragment implements SortListener {
 
@@ -44,6 +44,7 @@ public class Groups extends Fragment implements SortListener {
 		dbHelper.addSortListener(this);
 
 		setUpListView();
+	    
 		lvGroups.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int clickedViewPosition, long id) {
@@ -58,7 +59,6 @@ public class Groups extends Fragment implements SortListener {
 			}
 		});
 
-		//populate list view and set an adapter to it
 		return rootView;
 	}
 
@@ -79,13 +79,16 @@ public class Groups extends Fragment implements SortListener {
 	@Override
 	public void OrderChanged(SortEvent se) {
 		// TODO Auto-generated method stub
-		sortOrder = se.getOrder();
-		refresh();
+		if (!(isGroupList) && (getActivity() != null)) {
+			sortOrder = se.getOrder();
+			refresh();
+		}
 	} 
 	
 
 	private void refresh() {
 		// TODO Auto-generated method stub
+		
 
 		cursor = dbHelper.getGroupData(group, sortOrder);
 		
@@ -115,5 +118,14 @@ public class Groups extends Fragment implements SortListener {
 			}
 		});
 
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if (!(isGroupList)) {
+			refresh();
+		}
 	}
 }

@@ -73,6 +73,7 @@ public class Favourites extends Fragment implements SortListener {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		refresh();
 
 	}
 
@@ -86,8 +87,9 @@ public class Favourites extends Fragment implements SortListener {
 	public void OrderChanged(SortEvent se) {
 		// TODO Auto-generated method stub
 		sortOrder = se.getOrder();
-		refresh();
-
+		if (getActivity() != null) {
+			refresh();
+		}
 	}
 
 	private void refresh() {

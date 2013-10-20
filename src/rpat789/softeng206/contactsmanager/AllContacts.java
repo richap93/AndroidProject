@@ -3,20 +3,17 @@ package rpat789.softeng206.contactsmanager;
 import java.util.List;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class AllContacts extends Fragment implements SortListener {
@@ -30,6 +27,8 @@ public class AllContacts extends Fragment implements SortListener {
 	private String sortOrder = "firstName";
 	CursorListAdapter clAdapter;
 
+    FrameLayout historyContainer;
+    ViewStub viewStub;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

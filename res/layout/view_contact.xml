@@ -14,7 +14,7 @@
 	     <ImageView
 	        android:id="@+id/contact_image_view"
 	         android:layout_width="match_parent"
-	         android:layout_height="160dip"
+	         android:layout_height="220dip"
 	         android:layout_alignParentTop="true"
 	         android:layout_centerHorizontal="true"
 	         android:scaleType="fitXY"
