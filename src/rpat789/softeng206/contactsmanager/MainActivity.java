@@ -114,6 +114,8 @@ public class MainActivity extends Activity {
 			//Radio button dialog box for contact sort options
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 			dialogBuilder.setTitle("Sort");
+    		Log.d("testing", "HI");
+
 			dialogBuilder.setSingleChoiceItems(R.array.sort_options, -1, new DialogInterface.OnClickListener() {
 			    
 				@Override
@@ -125,6 +127,8 @@ public class MainActivity extends Activity {
 				        case 0:
 				            //Sort by first name selected
 				        	dbHelper.sortContacts("firstName");
+			        		Log.d("testing", "SORT ORDER IS FIRST");
+
 				            break;
 
 				        case 1:
@@ -133,11 +137,15 @@ public class MainActivity extends Activity {
 				        		Log.d("testing", "DB is null");
 				        	}
 				        	dbHelper.sortContacts("lastName");
+			        		Log.d("testing", "SORT ORDER IS LAST");
+
 				            break;
 				            
 				        case 2:
 				        	//Sort by number selected
 				        	dbHelper.sortContacts("mobilePhone");
+			        		Log.d("testing", "SORT ORDER IS NUMBER");
+
 				        	break;
 				      }
 				}
