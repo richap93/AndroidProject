@@ -29,20 +29,11 @@ import android.widget.Toast;
 public class AddContact extends Activity {
 
 	ImageButton imageButton;
-	TextView fName;
-	TextView lName;
-	TextView homeNum;
-	TextView workNum;
-	TextView mobile;
-	TextView homeAdd;
-	TextView workAdd;
-	TextView email;
-	TextView birthday;
+	TextView fName, lName, homeNum, workNum, mobile, homeAdd, workAdd, email, birthday;
 	Spinner group;
 	Bitmap bmp;
 	String selectedImagePath;
 	byte[] photo = null;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +47,7 @@ public class AddContact extends Activity {
 
 	private void setTextViews() {
 
+		//Access elements in the view
 		fName = (TextView)findViewById(R.id.first_name);
 		lName = (TextView)findViewById(R.id.last_name);
 		homeNum = (TextView)findViewById(R.id.item_home_number);
@@ -66,6 +58,7 @@ public class AddContact extends Activity {
 		email = (TextView)findViewById(R.id.item_email_addr);
 		birthday = (TextView)findViewById(R.id.birthday);
 		group = (Spinner)findViewById(R.id.group_spinner);
+		
 	}
 
 	private void setUpContactButton() {
@@ -76,26 +69,24 @@ public class AddContact extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddContact.this);
 				dialogBuilder.setTitle("Contact photo");
 				dialogBuilder.setItems(R.array.camera_options, new DialogInterface.OnClickListener() {
+					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// the user clicked on sort_options[which]
-						Log.d("testing", "which = "+which);
 
 						if (which == 0) {
 							
 							Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
 							startActivityForResult(i, 2);
-							Log.d("testing", "Selected gallery from options in add"); 
 							
 						} else if (which == 1) {
 							
 							Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 							startActivityForResult(intent, 0);
-							Log.d("testing", "Selected camera from options in add");
 						}
 
 					}
@@ -108,18 +99,17 @@ public class AddContact extends Activity {
 
 	}
 
+	/**
+	 * Adds the selected image to the view and database
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK && requestCode == 0) {
 
-			Log.d("testing", "Selected camera");
-
-
 			Bundle extras = data.getExtras();
 			Bitmap bmp = (Bitmap) extras.get("data");
-
 
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
@@ -148,51 +138,25 @@ public class AddContact extends Activity {
 		}
 	}
 
-	//	private Bitmap decodeFile(File f){
-	//		try {
-	//			//Decode image size
-	//			BitmapFactory.Options o = new BitmapFactory.Options();
-	//			o.inJustDecodeBounds = true;
-	//			BitmapFactory.decodeStream(new FileInputStream(f),null,o);
-	//
-	//			//The new size we want to scale to
-	//			final int REQUIRED_SIZE=50;
-	//
-	//			//Find the correct scale value. It should be the power of 2.
-	//			int scale=1;
-	//			while(o.outWidth/scale/2>=REQUIRED_SIZE && o.outHeight/scale/2>=REQUIRED_SIZE)
-	//				scale*=2;
-	//
-	//			//Decode with inSampleSize
-	//			BitmapFactory.Options o2 = new BitmapFactory.Options();
-	//			o2.inSampleSize=scale;
-	//			Log.d("testing", "YAY!");
-	//			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-	//		} catch (FileNotFoundException e) {}
-	//		return null;
-	//	}
-
-	public String getPath(Uri uri) {
-		String[] projection = { MediaStore.Images.Media.DATA };
-		Cursor cursor = managedQuery(uri, projection, null, null, null);
-		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-		cursor.moveToFirst();
-		return cursor.getString(column_index);
-	}
-
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_contact, menu);
 		return true;
+		
 	}
 
+	/**
+	 * Saves contact information or displays a dialog if cancel selected in menu bar
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//Finish activity if save or cancel pressed
+		
 		switch (item.getItemId()) {
 		case R.id.save_contact:
 
+			//Get the information entered by the user
 			String firstName = fName.getText().toString();
 			String lastName = lName.getText().toString();
 			String mobNum = mobile.getText().toString();
@@ -205,21 +169,29 @@ public class AddContact extends Activity {
 			String groupName = group.getSelectedItem().toString();
 
 			if (firstName.equals("")) {
+				//A dialog box displayed if the user has not entered a first name
+				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle("Error");
 				builder.setMessage("Please enter a first name");
 				builder.setPositiveButton("OK", null);
 				AlertDialog dialog = builder.show();
+				
 			} else {
+				//Contact information is saved to the database
+				
 				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(AddContact.this);
 				entry.insertContact(firstName, lastName, mobNum, homePh, workPh, emailAddress, homeAddress, workAddress, dateOfBirth, groupName, photo);
-				Toast.makeText(AddContact.this, firstName + " has been added g!", Toast.LENGTH_LONG).show();
-				AddContact.this.finish();
+				Toast.makeText(AddContact.this, firstName + " has been added to contacts", Toast.LENGTH_LONG).show();
+				AddContact.this.finish(); //returns to the previous screen
+				
 			}
+			
 			break;
 
 		case R.id.cancel_add:
-
+			//Dialog box displayed to the user to prompt them to confirm their decision
+			
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddContact.this);
 			dialogBuilder.setTitle("Warning");
 			dialogBuilder.setMessage("Changes will be discarded");
@@ -233,6 +205,7 @@ public class AddContact extends Activity {
 					finish(); 
 				}
 			});
+			
 			dialogBuilder.setCancelable(true);
 			dialogBuilder.create().show();
 			break;
