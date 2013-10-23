@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -39,7 +38,7 @@ public abstract class AddAbstract extends Activity {
 	}
 	
 	/**
-	 * Initialises TextView fields
+	 * Initialise TextView fields
 	 */
 	private void setTextViews() {
 

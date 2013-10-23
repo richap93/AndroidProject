@@ -15,5 +15,4 @@ public class Favourites extends TabsAbstract {
 		
 	}
 
-
 }

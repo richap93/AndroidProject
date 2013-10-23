@@ -15,6 +15,5 @@ public class AllContacts extends TabsAbstract {
 		
 	}
 
-
 }
 
