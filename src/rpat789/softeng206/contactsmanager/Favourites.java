@@ -18,7 +18,6 @@ import android.widget.AdapterView.OnItemClickListener;
 public class Favourites extends Fragment implements SortListener {
 
 	private ListView listView;
-	List<Contact> contactList;
 	Cursor cursor;
 	private ContactsDatabaseHelper dbHelper;
 	private String[] from;
