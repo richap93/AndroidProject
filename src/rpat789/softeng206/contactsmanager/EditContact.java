@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -144,13 +145,17 @@ public class EditContact extends Activity {
 				    @Override
 				    public void onClick(DialogInterface dialog, int which) {
 				        // the user clicked on sort_options[which]
-				    	switch (which) {
-						case 0:
+				    	if (which == 0) {
+							
+							Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+							startActivityForResult(i, 2);
+							Log.d("testing", "Selected gallery from options in edit"); 
+							
+						} else if (which == 1) {
+							
 							Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 							startActivityForResult(intent, 0);
-
-						case 1:
-
+							Log.d("testing", "Selected camera from options in edit");
 						}
 
 					}
@@ -167,15 +172,13 @@ public class EditContact extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+		
+		if (requestCode == 0 && resultCode == RESULT_OK) {
+			
+			Log.d("testing", "Selected camera from options");
 			
 			Bundle extras = data.getExtras();
 			Bitmap bmp = (Bitmap) extras.get("data");
-			
-//			BitmapDrawable b = (BitmapDrawable)image.getDrawable();
-//			Bitmap bmp = b.getBitmap();
-			Uri selectedImageUri = data.getData();
-
 			
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
@@ -183,7 +186,26 @@ public class EditContact extends Activity {
 			
 			image.setImageBitmap(bmp);
 
+		} else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
+			  
+			Log.d("testing", "Selected gallery");
+            Uri selectedImage = data.getData();
+            String[] filePath = { MediaStore.Images.Media.DATA };
+            Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+            Bitmap bmp = (BitmapFactory.decodeFile(picturePath));
+            
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
+			photo = stream.toByteArray();
+			
+			image.setImageBitmap(bmp);
+            
 		}
+            
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {

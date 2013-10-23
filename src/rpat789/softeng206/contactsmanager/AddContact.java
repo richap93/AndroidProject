@@ -39,7 +39,6 @@ public class AddContact extends Activity {
 	TextView email;
 	TextView birthday;
 	Spinner group;
-	//	TextView contactId;
 	Bitmap bmp;
 	String selectedImagePath;
 	byte[] photo = null;
@@ -54,7 +53,7 @@ public class AddContact extends Activity {
 		setTextViews();
 
 	}
-	
+
 	private void setTextViews() {
 
 		fName = (TextView)findViewById(R.id.first_name);
@@ -84,14 +83,19 @@ public class AddContact extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// the user clicked on sort_options[which]
+						Log.d("testing", "which = "+which);
 
-						switch (which) {
-						case 0:
+						if (which == 0) {
+							
+							Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+							startActivityForResult(i, 2);
+							Log.d("testing", "Selected gallery from options in add"); 
+							
+						} else if (which == 1) {
+							
 							Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 							startActivityForResult(intent, 0);
-
-						case 1:
-
+							Log.d("testing", "Selected camera from options in add");
 						}
 
 					}
@@ -108,69 +112,65 @@ public class AddContact extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			
+		if (resultCode == RESULT_OK && requestCode == 0) {
+
+			Log.d("testing", "Selected camera");
+
+
 			Bundle extras = data.getExtras();
 			Bitmap bmp = (Bitmap) extras.get("data");
-			
-//			BitmapDrawable b = (BitmapDrawable)image.getDrawable();
-//			Bitmap bmp = b.getBitmap();
-			Uri selectedImageUri = data.getData();
 
-			
+
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
 			photo = stream.toByteArray();
-			
-			
-			
-			
-//			selectedImagePath = getPath(selectedImageUri);
-//			Log.d("testing", selectedImagePath);
-
-			//			COMPRESSION - TAZZY'S WAY
-			//			FileOutputStream v;
-			//			try {
-			//				v = new FileOutputStream(new File(selectedImagePath));
-			//				bmp.compress(Bitmap.CompressFormat.PNG, 100, v);
-			//				v.close();
-			//			} catch (FileNotFoundException e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			} catch (IOException e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			}
-//			bmp = decodeFile(new File(selectedImagePath));
 			imageButton.setImageBitmap(bmp);
 
+
+		} else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
+
+			Log.d("testing", "Selected gallery");
+			Uri selectedImage = data.getData();
+			String[] filePath = { MediaStore.Images.Media.DATA };
+			Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+			c.moveToFirst();
+			int columnIndex = c.getColumnIndex(filePath[0]);
+			String picturePath = c.getString(columnIndex);
+			c.close();
+			Bitmap bmp = (BitmapFactory.decodeFile(picturePath));
+
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream);
+			photo = stream.toByteArray();
+
+			imageButton.setImageBitmap(bmp);
 
 		}
 	}
 
-//	private Bitmap decodeFile(File f){
-//		try {
-//			//Decode image size
-//			BitmapFactory.Options o = new BitmapFactory.Options();
-//			o.inJustDecodeBounds = true;
-//			BitmapFactory.decodeStream(new FileInputStream(f),null,o);
-//
-//			//The new size we want to scale to
-//			final int REQUIRED_SIZE=50;
-//
-//			//Find the correct scale value. It should be the power of 2.
-//			int scale=1;
-//			while(o.outWidth/scale/2>=REQUIRED_SIZE && o.outHeight/scale/2>=REQUIRED_SIZE)
-//				scale*=2;
-//
-//			//Decode with inSampleSize
-//			BitmapFactory.Options o2 = new BitmapFactory.Options();
-//			o2.inSampleSize=scale;
-//			Log.d("testing", "YAY!");
-//			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-//		} catch (FileNotFoundException e) {}
-//		return null;
-//	}
+	//	private Bitmap decodeFile(File f){
+	//		try {
+	//			//Decode image size
+	//			BitmapFactory.Options o = new BitmapFactory.Options();
+	//			o.inJustDecodeBounds = true;
+	//			BitmapFactory.decodeStream(new FileInputStream(f),null,o);
+	//
+	//			//The new size we want to scale to
+	//			final int REQUIRED_SIZE=50;
+	//
+	//			//Find the correct scale value. It should be the power of 2.
+	//			int scale=1;
+	//			while(o.outWidth/scale/2>=REQUIRED_SIZE && o.outHeight/scale/2>=REQUIRED_SIZE)
+	//				scale*=2;
+	//
+	//			//Decode with inSampleSize
+	//			BitmapFactory.Options o2 = new BitmapFactory.Options();
+	//			o2.inSampleSize=scale;
+	//			Log.d("testing", "YAY!");
+	//			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+	//		} catch (FileNotFoundException e) {}
+	//		return null;
+	//	}
 
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
