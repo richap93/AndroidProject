@@ -2,7 +2,6 @@ package rpat789.softeng206.contactsmanager;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,36 +14,40 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewContact extends Activity {
-	
+public class ViewContact extends Activity implements OnClickListener {
+
 	private ContactsDatabaseHelper dbHelper;
 	private String fName, lName, fullName;
 	Cursor c;
-	String id;
+	String id, mob, home, work, emailAdd;
 	List<TextView> tvs = new ArrayList<TextView>();
 	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
 	ImageButton mobileButton, homeButton, workButton, textMobile, emailContact;
 	ImageView image;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_contact);
 
+		//Enables back button in the menu bar to return to the AllContacts screen
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
+		//Gets the ID of the contact to view from intent/previous activity
 		Intent i = getIntent();
 		id = i.getStringExtra("ID");
-		
+
 		dbHelper = ContactsDatabaseHelper.getDatabase(ViewContact.this);
+
+		//Cursor to the row of the contact information that corresponds to that id
 		c = dbHelper.getContact(id);
+
 
 		if (c.moveToFirst()) {
 			fName = c.getString(1);
@@ -53,83 +56,89 @@ public class ViewContact extends Activity {
 			setTitle(fullName);
 			populateView(c);
 		}
-		
+
+		//Access buttons (Note we must specify the parent view to look in)
 		mobileButton = (ImageButton)findViewById(R.id.call_mobile);
 		homeButton = (ImageButton)findViewById(R.id.call_home);
 		workButton = (ImageButton)findViewById(R.id.call_work);
 		textMobile = (ImageButton)findViewById(R.id.message_mobile);
 		emailContact = (ImageButton)findViewById(R.id.email_icon);
 
-//		contactImage = (ImageButton)findViewById(R.id.)
-		
-		mobileButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent callIntent = new Intent(Intent.ACTION_CALL);
-				String mob = mobile.getText().toString();
-			    callIntent.setData(Uri.parse("tel:"+mob));
-			    startActivity(callIntent);
-			}
-		});
-		
-		homeButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent callIntent = new Intent(Intent.ACTION_CALL);
-				String mob = homeNum.getText().toString();
-			    callIntent.setData(Uri.parse("tel:"+homeNum));
-			    startActivity(callIntent);
-			}
-		});
-		
-		workButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent callIntent = new Intent(Intent.ACTION_CALL);
-				String mob = workNum.getText().toString();
-			    callIntent.setData(Uri.parse("tel:"+workNum));
-			    startActivity(callIntent);
-			}
-		});
+		//Get numbers and email 
+		mob = mobile.getText().toString();
+		home = homeNum.getText().toString();
+		work = workNum.getText().toString();
+		emailAdd = email.getText().toString();
 
-		textMobile.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				String mob = mobile.getText().toString();
-				Intent toSend = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + mob));
-				startActivity(toSend);
-			}
-		});
+		//set setOnClickListener's for all buttons
+		mobileButton.setOnClickListener(this);
+		homeButton.setOnClickListener(this);
+		workButton.setOnClickListener(this);
+		textMobile.setOnClickListener(this);
+		emailContact.setOnClickListener(this);
+
+	}
+
+	/**
+	 * Implements actions perfomed on each button click
+	 */
+	@Override
+	public void onClick(View v) {
+
+		Intent i = new Intent();
+		i.setAction(Intent.ACTION_CALL);
+		String uriString = "";
+
+		switch(v.getId()){
 		
-		emailContact.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				String emailAdd = email.getText().toString();
-				if (!(emailAdd.equals(""))) {
-					Intent intent = new Intent(Intent.ACTION_SEND);
-					intent.setType("plain/text");
-					intent.putExtra(Intent.EXTRA_EMAIL, new String[] { emailAdd });
-//					intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
-//					intent.putExtra(Intent.EXTRA_TEXT, "mail body");
-					startActivity(Intent.createChooser(intent, ""));
+			//Call button next to mobile selected
+			case R.id.call_mobile:
+				if(!(mob.equals(""))) {
+					uriString = "tel:" + mob;
 				}
-			}
-		});
+				break;
+	
+			//Call button next to home selected
+			case R.id.call_home:
+				if(!(home.equals(""))) {
+					uriString = "tel:" + home;
+				}
+				break;
+			
+			//Call button next to work selected
+			case R.id.call_work:
+				if(!(work.equals(""))) {
+					uriString = "tel:" + work;
+				}
+				break;
+	
+			//Message button next to mobile selected
+			case R.id.message_mobile:
+				if(!(mob.equals(""))) {
+					uriString = "sms:" + mobile;
+				}
+				i.setAction(Intent.ACTION_VIEW);
+				break;
+	
+			//Email button next to email address selected
+			case R.id.email_icon:
+				if(!(emailAdd.equals(""))) {
+					uriString = "mailto:" + emailAdd;
+					i.setAction(Intent.ACTION_VIEW);
+				}
+				break;
+	
+			default:
+				return;
+		}
+
+		i.setData(Uri.parse(uriString)); //parses the given string
+		startActivity(i);
 
 	}
 
 	private void populateView(Cursor c){
-			
+
 		//Access textview elements inside the view (Note we must specify the parent view to look in)
 		mobile = (TextView)findViewById(R.id.list_item_mobile_phone);
 		homeNum = (TextView)findViewById(R.id.list_item_home_phone);
@@ -139,7 +148,7 @@ public class ViewContact extends Activity {
 		workAdd = (TextView)findViewById(R.id.list_work_address);	
 		birthday = (TextView)findViewById(R.id.list_item_DOB);
 		image = (ImageView)findViewById(R.id.contact_image_view);
-		
+
 		//Populate list of TextViews
 		tvs.add(mobile);
 		tvs.add(homeNum);
@@ -148,11 +157,12 @@ public class ViewContact extends Activity {
 		tvs.add(homeAdd);
 		tvs.add(workAdd);
 		tvs.add(birthday);
-		
-//		c.moveToFirst();
-		byte[] contactImage = c.getBlob(12);
-		
 
+		c.moveToFirst();
+		
+		byte[] contactImage = c.getBlob(12);
+
+		//Sets the image for the contact
 		if (contactImage != null) {
 			Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
 			bm = Bitmap.createBitmap(bm, 0, 20, bm.getWidth(), (int) (bm.getWidth()*0.6));
@@ -160,7 +170,7 @@ public class ViewContact extends Activity {
 		} else {
 			image.setImageResource(R.drawable.view_contact_icon);
 		}
-		
+
 		//Set text for all the TextViews
 		TextView tv;
 		int j;
@@ -170,67 +180,72 @@ public class ViewContact extends Activity {
 			tv.setText(c.getString(i));
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
+
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.view, menu);
 		return (super.onCreateOptionsMenu(menu));
-		
+
 	}
 	
+	/**
+	 * Implements actions performed on buttons clicked in the action bar
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
+
 		if (item.getItemId() == R.id.delete_contact) {
-			
+
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ViewContact.this);
 			dialogBuilder.setTitle("Delete");
 			dialogBuilder.setMessage(fullName + " will be removed from contacts");
 			dialogBuilder.setNegativeButton("Cancel", null);
 			dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					 switch (which){
-				        case DialogInterface.BUTTON_POSITIVE:
-				            //Yes button clicked
-				        	dbHelper.deleteContact(id);
-				        	finish();
-				        	Toast.makeText(ViewContact.this, "Contact deleted", Toast.LENGTH_LONG).show();
-				            break;
+					switch (which){
+					case DialogInterface.BUTTON_POSITIVE:
+						//Yes button clicked
+						dbHelper.deleteContact(id);
+						finish();
+						Toast.makeText(ViewContact.this, "Contact deleted", Toast.LENGTH_LONG).show();
+						break;
 
-				        case DialogInterface.BUTTON_NEGATIVE:
-				            //No button clicked
-				            break;
-				        }
+					case DialogInterface.BUTTON_NEGATIVE:
+						//No button clicked
+						break; //dialog box is closed
+					}
 				}
 			});
-			
+
 			dialogBuilder.setCancelable(true);
 			dialogBuilder.create().show();
-			
+
 		} else if (item.getItemId() == R.id.favourites_icon) {
-			
+
+			//Contact is added or deleted from the favourites
 			boolean isFav = dbHelper.updateFavourite(id);
-			String change = " REMOVED from ";
+			String change = " has been removed from ";
 			if (isFav){
-				change = " ADDED to ";
+				change = " has been added to ";
 			}
-			
+
 			Toast.makeText(ViewContact.this,fullName + change + "favourites" , Toast.LENGTH_LONG).show();
 			finish();
-			
-			
+
+
 		} else if (item.getItemId() == R.id.edit_icon) {
-			
+
+			//Activity changed to EditContact
 			Intent i = new Intent();
-			i.putExtra("ID", id);
+			i.putExtra("ID", id); //id of the contact in the database passed to the intent
 			i.setClass(ViewContact.this, EditContact.class);
 			startActivity(i);
-			
+
 			finish();
-			
+
 		}
 
 		return (super.onOptionsItemSelected(item));

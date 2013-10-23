@@ -16,7 +16,7 @@ import android.view.MenuItem;
 
 /**
  * Frame Activity with the three tabs - All contacts, Favourites and Groups
- * @author richa
+ * @author Richa Patel
  */
 public class MainActivity extends Activity {
 
