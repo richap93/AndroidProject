@@ -210,7 +210,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	 */
 	public void deleteContact(String id) {
 		
-		int num = this.getWritableDatabase().delete(TABLE_CONTACTS, CONTACTS_ID + " = " + id, null);
+		this.getWritableDatabase().delete(TABLE_CONTACTS, CONTACTS_ID + " = " + id, null);
 		
 	}
 	

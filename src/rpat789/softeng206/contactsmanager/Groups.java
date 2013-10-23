@@ -2,14 +2,10 @@ package rpat789.softeng206.contactsmanager;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +24,15 @@ public class Groups extends Fragment implements SortListener {
 	private String group = null;
 	Cursor cursor;
 	private ContactsDatabaseHelper dbHelper;
-	private String[] from;
-	private int[] to;
 	boolean isGroupList;
 	private CursorListAdapter clAdapter;
 	private View rootView;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.activity_groups, container, false);
+		rootView = inflater.inflate(R.layout.activity_main, container, false);
 		isGroupList = true;
-		lvGroups = (ListView)rootView.findViewById(R.id.groups_listView);
+		lvGroups = (ListView)rootView.findViewById(R.id.main_listView);
 		
 		dbHelper = ContactsDatabaseHelper.getDatabase(getActivity());
 		dbHelper.addSortListener(this);
@@ -74,6 +68,7 @@ public class Groups extends Fragment implements SortListener {
 
 		ListAdapter listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupOptions);
 		lvGroups.setAdapter(listAdapter);
+		
 	}
 
 	@Override
@@ -85,11 +80,8 @@ public class Groups extends Fragment implements SortListener {
 		}
 	} 
 	
-
 	private void refresh() {
-		// TODO Auto-generated method stub
 		
-
 		cursor = dbHelper.getGroupData(group, sortOrder);
 		
 		cursor.moveToFirst();

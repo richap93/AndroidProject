@@ -1,12 +1,12 @@
 package rpat789.softeng206.contactsmanager;
 
 import java.io.ByteArrayOutputStream;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;

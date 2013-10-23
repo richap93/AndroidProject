@@ -109,6 +109,7 @@ public class EditContact extends AddAbstract {
 
 		case R.id.cancel_add:
 
+			//Show dialog box to prompt user to confirm their decision
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(EditContact.this);
 			dialogBuilder.setTitle("Warning");
 			dialogBuilder.setMessage("Changes will be discarded");

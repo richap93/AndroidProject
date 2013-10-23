@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 public class CursorListAdapter extends CursorAdapter {
 
-	private Context context;
 	LayoutInflater inflater;
 	
 	public CursorListAdapter(Context context, Cursor c) {

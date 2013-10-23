@@ -25,6 +25,8 @@ public class AddContact extends AddAbstract {
 		switch (item.getItemId()) {
 		case R.id.save_contact:
 
+			getInfo();
+
 			if (firstName.isEmpty()) {
 				
 				//A dialog box displayed if the user has not entered a first name
