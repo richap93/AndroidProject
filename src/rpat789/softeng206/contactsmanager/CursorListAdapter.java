@@ -13,21 +13,23 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 public class CursorListAdapter extends CursorAdapter {
 
 	private Context context;
 	LayoutInflater inflater;
 	
 	public CursorListAdapter(Context context, Cursor c) {
+		
 		super(context, c);
-		// TODO Auto-generated constructor stub
 		inflater = LayoutInflater.from(context);
+		
 	}
 
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
-
+		//Take data from the cursor and put it in the views
+		
+		//Access elements in the list view (Note we must specify the parent view to look in)
 		TextView firstName = (TextView) view.findViewById(R.id.list_item_text_contact_first);
 		TextView lastName = (TextView) view.findViewById(R.id.list_item_text_contact_last);
 		TextView id = (TextView) view.findViewById(R.id.contact_id);
@@ -37,6 +39,7 @@ public class CursorListAdapter extends CursorAdapter {
 		firstName.setTextColor(Color.BLACK);
 		lastName.setTextColor(Color.BLACK);
 		
+		//Set the text for each textview (use the position argument to find the appropriate element in the list) 
 		id.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(0))));
 		firstName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
 		lastName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
@@ -44,27 +47,25 @@ public class CursorListAdapter extends CursorAdapter {
 
 		byte[] contactImage = cursor.getBlob(12);
 		
-		
+		//Set the image for the ImageView
 		if (contactImage != null) {
 			Bitmap bm = BitmapFactory.decodeByteArray(contactImage, 0, contactImage.length);
-			bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth());
+			bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getWidth()); //Crop image if from camera
 			image.setImageBitmap(bm);
-			
-			
 		} else {
-			image.setImageResource(R.drawable.contact_photo);
+			image.setImageResource(R.drawable.contact_photo); //Or use the default image in drawable 
 		}
 		
-//		Bitmap bmp=BitmapFactory.decodeResource(getResources(), R.drawable.xyz);
-//
-//		resizedbitmap1=Bitmap.createBitmap(bmp, 0,0,yourwidth, yourheight);
 	}
 
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		// TODO Auto-generated method stub
+		//When the view is created for the first time, need to tell adapters how each each item will look
+		
+		//Create a layout inflater to inflate xml layout(custom_list_view) for each item in the list
 		LayoutInflater inf = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
+		//Inflate the list item layout . Keep a reference to the inflated view.
 		View listItemView = inf.inflate(R.layout.custom_list_view, null);
 				
 		return listItemView;
