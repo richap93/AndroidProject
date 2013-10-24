@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -95,6 +96,9 @@ public class ViewContact extends Activity implements OnClickListener {
 			case R.id.call_mobile:
 				if(!(mob.equals(""))) {
 					uriString = "tel:" + mob;
+				} else {
+					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
+					return;
 				}
 				break;
 	
@@ -102,6 +106,9 @@ public class ViewContact extends Activity implements OnClickListener {
 			case R.id.call_home:
 				if(!(home.equals(""))) {
 					uriString = "tel:" + home;
+				} else {
+					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
+					return;
 				}
 				break;
 			
@@ -109,22 +116,32 @@ public class ViewContact extends Activity implements OnClickListener {
 			case R.id.call_work:
 				if(!(work.equals(""))) {
 					uriString = "tel:" + work;
+				} else {
+					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
+					return;
 				}
 				break;
 	
 			//Message button next to mobile selected
 			case R.id.message_mobile:
-				if(!(mob.equals(""))) {
-					uriString = "sms:" + mobile;
+				if(!(mob.isEmpty())){
+					uriString = "sms: " + mob;
+					i.setAction(Intent.ACTION_VIEW);
+				} else {
+					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
+					return;
 				}
-				i.setAction(Intent.ACTION_VIEW);
 				break;
 	
 			//Email button next to email address selected
 			case R.id.email_icon:
+
 				if(!(emailAdd.equals(""))) {
-					uriString = "mailto:" + emailAdd;
+					uriString = "mailto: " + emailAdd;
 					i.setAction(Intent.ACTION_VIEW);
+				} else {
+					Toast.makeText(getApplicationContext(), "No email", Toast.LENGTH_LONG).show();
+					return;
 				}
 				break;
 	
