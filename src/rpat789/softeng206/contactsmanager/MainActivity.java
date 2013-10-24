@@ -8,7 +8,6 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +28,6 @@ public class MainActivity extends Activity {
 
 	private AlertDialog levelDialog;
 	private ContactsDatabaseHelper dbHelper;
-	private Cursor c;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
