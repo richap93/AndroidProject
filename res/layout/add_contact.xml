@@ -31,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="85dip"
-            android:hint="First name"
+            android:hint="@string/first_name_hint"
             android:inputType="textCapWords" />
 
         <EditText
@@ -40,14 +40,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/first_name"
             android:layout_marginLeft="85dip"
-            android:hint="Last name"
+            android:hint="@string/last_name_hint"
             android:inputType="textCapWords" />
 
         <TextView
             android:id="@+id/list_label_phone"
             style="@style/blueSubheadings"
             android:layout_below="@id/image"
-            android:text="PHONE" />
+            android:text="@string/phone_label" />
 
         <ImageView
             android:id="@+id/under_phone_line"
@@ -58,7 +58,7 @@
             android:id="@+id/mobile_subheading"
             style="@style/viewContactGreySubheadingsAdd"
             android:layout_below="@id/under_phone_line"
-            android:text="MOBILE: " />
+            android:text="@string/mobile_subheading" />
 
         <EditText
             android:id="@+id/item_mobile_number"
@@ -72,7 +72,7 @@
             android:id="@+id/home_subheading"
             style="@style/viewContactGreySubheadingsAdd"
             android:layout_below="@id/mobile_subheading"
-            android:text="HOME: " />
+            android:text="@string/home_subheading" />
 
         <EditText
             android:id="@+id/item_home_number"
@@ -86,7 +86,7 @@
             android:id="@+id/work_subheading"
             style="@style/viewContactGreySubheadingsAdd"
             android:layout_below="@id/home_subheading"
-            android:text="WORK: " />
+            android:text="@string/work_subheading" />
 
         <EditText
             android:id="@+id/item_work_number"
@@ -100,7 +100,7 @@
             android:id="@+id/list_label_address"
             style="@style/blueSubheadings"
             android:layout_below="@id/work_subheading"
-            android:text="ADDRESS" />
+            android:text="@string/address_label" />
 
         <ImageView
             android:id="@+id/under_address_line"
@@ -111,7 +111,7 @@
             android:id="@+id/home_addr_subheading"
             style="@style/viewContactGreySubheadingsAdd"
             android:layout_below="@id/under_address_line"
-            android:text="HOME: " />
+            android:text="@string/home_subheading" />
 
         <EditText
             android:id="@+id/item_home_addr"
@@ -125,7 +125,7 @@
             android:id="@+id/work_addr_subheading"
             style="@style/viewContactGreySubheadingsAdd"
             android:layout_below="@id/home_addr_subheading"
-            android:text="WORK: " />
+            android:text="@string/work_subheading" />
 
         <EditText
             android:id="@+id/item_work_addr"
@@ -138,7 +138,7 @@
             android:id="@+id/list_label_email"
             style="@style/blueSubheadings"
             android:layout_below="@id/work_addr_subheading"
-            android:text="EMAIL" />
+            android:text="@string/email_label" />
 
         <ImageView
             android:id="@+id/under_email_line"
@@ -156,7 +156,7 @@
             android:id="@+id/list_label_birthday"
             style="@style/blueSubheadings"
             android:layout_below="@id/item_email_addr"
-            android:text="BIRTHDAY" />
+            android:text="@string/birthday_label" />
 
         <ImageView
             android:id="@+id/under_birthday_line"
@@ -168,13 +168,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/under_birthday_line"
-            android:hint="dd/mm/yyyy" />
+            android:inputType="date"
+            android:hint="@string/birthday_hint" />
 
         <TextView
             android:id="@+id/list_label_group"
             style="@style/blueSubheadings"
             android:layout_below="@id/birthday"
-            android:text="GROUP" />
+            android:text="@string/group_label" />
 
         <ImageView
             android:id="@+id/under_group_line"

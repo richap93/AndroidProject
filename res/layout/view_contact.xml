@@ -24,7 +24,7 @@
             android:id="@+id/list_label_phone"
             style="@style/blueSubheadings"
             android:layout_below="@id/contact_image_view"
-            android:text="PHONE" />
+            android:text="@string/phone_label" />
 
         <ImageView
             android:id="@+id/under_phone_line"
@@ -35,7 +35,7 @@
             android:id="@+id/mobile_subheading"
             style="@style/viewContactGreySubheadings"
             android:layout_below="@id/under_phone_line"
-            android:text="MOBILE" />
+            android:text="@string/mobile_label" />
 
         <TextView
             android:id="@+id/list_item_mobile_phone"
@@ -51,7 +51,7 @@
             android:id="@+id/home_subheading"
             style="@style/viewContactGreySubheadings"
             android:layout_below="@id/under_mobile_phone_line"
-            android:text="HOME" />
+            android:text="@string/home_label" />
 
         <TextView
             android:id="@+id/list_item_home_phone"
@@ -72,7 +72,7 @@
             android:id="@+id/work_subheading"
             style="@style/viewContactGreySubheadings"
             android:layout_below="@id/under_home_phone_line"
-            android:text="WORK" />
+            android:text="@string/work_label" />
 
         <TextView
             android:id="@+id/list_item_work_phone"
@@ -88,7 +88,7 @@
             android:id="@+id/list_label_email"
             style="@style/blueSubheadings"
             android:layout_below="@id/list_item_work_phone"
-            android:text="EMAIL" />
+            android:text="@string/email_label" />
 
         <ImageView
             android:id="@+id/under_email_line"
@@ -104,7 +104,7 @@
             android:id="@+id/list_address_email"
             style="@style/blueSubheadings"
             android:layout_below="@id/list_item_email"
-            android:text="ADDRESS" />
+            android:text="@string/address_label" />
 
         <ImageButton
             android:id="@+id/email_icon"
@@ -120,7 +120,7 @@
             android:id="@+id/home_addr_subheading"
             style="@style/viewContactGreySubheadings"
             android:layout_below="@id/under_address_line"
-            android:text="HOME" />
+            android:text="@string/home_label" />
 
         <TextView
             android:id="@+id/list_home_address"
@@ -136,7 +136,7 @@
             android:id="@+id/work_addr_subheading"
             style="@style/viewContactGreySubheadings"
             android:layout_below="@id/under_home_address_line"
-            android:text="WORK" />
+            android:text="@string/work_label" />
 
         <TextView
             android:id="@+id/list_work_address"
@@ -147,7 +147,7 @@
             android:id="@+id/list_label_DOB"
             style="@style/blueSubheadings"
             android:layout_below="@id/list_work_address"
-            android:text="DATE OF BIRTH" />
+            android:text="@string/dob_label" />
 
         <ImageView
             android:id="@+id/under_DOB_line"

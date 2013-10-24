@@ -37,5 +37,22 @@
     <string name="title_activity_tab_layout">TabLayout</string>
     <string name="title_activity_all_contacts">AllContacts</string>
     <string name="title_activity_edit_contact">EditContact</string>
-
+    
+    <string name="first_name_hint">First name</string>
+    <string name="last_name_hint">Last name</string>
+    <string name="phone_label">PHONE</string>
+    <string name="mobile_label">MOBILE</string>
+    <string name="mobile_subheading">MOBILE: </string>
+    <string name="home_subheading">HOME: </string>
+    <string name="home_label">HOME</string>
+    <string name="work_subheading">WORK: </string>
+    <string name="work_label">WORK</string>
+    <string name="address_label">ADDRESS</string>
+    <string name="email_label">EMAIL</string>
+    <string name="birthday_label">BIRTHDAY</string>
+    <string name="dob_label">DATE OF BIRTH</string>
+    <string name="group_label">GROUP</string>
+    <string name="birthday_hint">dd/mm/yyyy</string>
+    
+    
 </resources>

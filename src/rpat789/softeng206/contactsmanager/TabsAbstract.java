@@ -67,7 +67,7 @@ public abstract class TabsAbstract extends Fragment implements SortListener {
 		return rootView;
 	}
 
-	abstract void refresh();
+	protected abstract void refresh();
 
 	@Override
 	public void onResume() {

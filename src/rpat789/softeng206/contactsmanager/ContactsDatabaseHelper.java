@@ -7,7 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Help manage interaction with the database 
@@ -139,7 +138,6 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		cv.put(GROUPS, group);
 		cv.put(IMAGE, image);
 
-		Log.d("testing", "group inserted is" + group);
 		return contactsDb.insert(TABLE_CONTACTS, null, cv);
 
 	}
@@ -164,7 +162,6 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	public Cursor getFavoritesData(String orderType) {
 
 		dbHelper.open();
-		Log.d("testing", "orderType is "+orderType);
 		return contactsDb.query(TABLE_CONTACTS, null, FAVOURITES + "= 1", null, null, null, orderType);
 
 	}
