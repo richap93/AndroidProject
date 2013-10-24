@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class CursorListAdapter extends CursorAdapter {
 
-	LayoutInflater inflater;
+	private LayoutInflater inflater;
 	
 	public CursorListAdapter(Context context, Cursor c) {
 		

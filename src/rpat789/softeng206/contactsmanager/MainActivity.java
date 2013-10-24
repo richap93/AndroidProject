@@ -20,16 +20,16 @@ import android.view.MenuItem;
  */
 public class MainActivity extends Activity {
 
-	ActionBar.Tab Tab1, Tab2, Tab3;
+	private ActionBar.Tab Tab1, Tab2, Tab3;
 
 	//Set fragments
-	Fragment fragmentTab1 = new AllContacts();
-	Fragment fragmentTab3 = new Groups();
-	Fragment fragmentTab2 = new Favourites();
+	private Fragment fragmentTab1 = new AllContacts();
+	private Fragment fragmentTab3 = new Groups();
+	private Fragment fragmentTab2 = new Favourites();
 
-	AlertDialog levelDialog;
-	ContactsDatabaseHelper dbHelper;
-	Cursor c;
+	private AlertDialog levelDialog;
+	private ContactsDatabaseHelper dbHelper;
+	private Cursor c;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
