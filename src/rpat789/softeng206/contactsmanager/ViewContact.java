@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,12 +24,13 @@ public class ViewContact extends Activity implements OnClickListener {
 
 	private ContactsDatabaseHelper dbHelper;
 	private String fName, lName, fullName;
-	Cursor c;
-	String id, mob, home, work, emailAdd;
-	List<TextView> tvs = new ArrayList<TextView>();
-	TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
-	ImageButton mobileButton, homeButton, workButton, textMobile, emailContact;
-	ImageView image;
+	private Cursor c;
+	private String id, mob, home, work, emailAdd;
+	private List<TextView> tvs = new ArrayList<TextView>();
+	private TextView mobile, homeNum, workNum, email, homeAdd, workAdd, birthday;
+	private ImageButton mobileButton, homeButton, workButton, textMobile, emailContact;
+	private ImageView image;
+	private boolean isFav;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,62 +91,62 @@ public class ViewContact extends Activity implements OnClickListener {
 		String uriString = "";
 
 		switch(v.getId()){
-		
-			//Call button next to mobile selected
-			case R.id.call_mobile:
-				if(!(mob.equals(""))) {
-					uriString = "tel:" + mob;
-				} else {
-					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
-					return;
-				}
-				break;
-	
-			//Call button next to home selected
-			case R.id.call_home:
-				if(!(home.equals(""))) {
-					uriString = "tel:" + home;
-				} else {
-					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
-					return;
-				}
-				break;
-			
-			//Call button next to work selected
-			case R.id.call_work:
-				if(!(work.equals(""))) {
-					uriString = "tel:" + work;
-				} else {
-					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
-					return;
-				}
-				break;
-	
-			//Message button next to mobile selected
-			case R.id.message_mobile:
-				if(!(mob.isEmpty())){
-					uriString = "sms: " + mob;
-					i.setAction(Intent.ACTION_VIEW);
-				} else {
-					Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
-					return;
-				}
-				break;
-	
-			//Email button next to email address selected
-			case R.id.email_icon:
 
-				if(!(emailAdd.equals(""))) {
-					uriString = "mailto: " + emailAdd;
-					i.setAction(Intent.ACTION_VIEW);
-				} else {
-					Toast.makeText(getApplicationContext(), "No email", Toast.LENGTH_LONG).show();
-					return;
-				}
-				break;
-	
-			default:
+		//Call button next to mobile selected
+		case R.id.call_mobile:
+			if(!(mob.equals(""))) {
+				uriString = "tel:" + mob;
+			} else {
+				Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
 				return;
+			}
+			break;
+
+			//Call button next to home selected
+		case R.id.call_home:
+			if(!(home.equals(""))) {
+				uriString = "tel:" + home;
+			} else {
+				Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
+				return;
+			}
+			break;
+
+			//Call button next to work selected
+		case R.id.call_work:
+			if(!(work.equals(""))) {
+				uriString = "tel:" + work;
+			} else {
+				Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
+				return;
+			}
+			break;
+
+			//Message button next to mobile selected
+		case R.id.message_mobile:
+			if(!(mob.isEmpty())){
+				uriString = "sms: " + mob;
+				i.setAction(Intent.ACTION_VIEW);
+			} else {
+				Toast.makeText(getApplicationContext(), "No number", Toast.LENGTH_LONG).show();
+				return;
+			}
+			break;
+
+			//Email button next to email address selected
+		case R.id.email_icon:
+
+			if(!(emailAdd.equals(""))) {
+				uriString = "mailto: " + emailAdd;
+				i.setAction(Intent.ACTION_VIEW);
+			} else {
+				Toast.makeText(getApplicationContext(), "No email", Toast.LENGTH_LONG).show();
+				return;
+			}
+			break;
+
+		default:
+			return;
 		}
 
 		i.setData(Uri.parse(uriString)); //parses the given string
@@ -176,7 +176,7 @@ public class ViewContact extends Activity implements OnClickListener {
 		tvs.add(birthday);
 
 		c.moveToFirst();
-		
+
 		byte[] contactImage = c.getBlob(12);
 
 		//Sets the image for the contact
@@ -206,7 +206,7 @@ public class ViewContact extends Activity implements OnClickListener {
 		return (super.onCreateOptionsMenu(menu));
 
 	}
-	
+
 	/**
 	 * Implements actions performed on buttons clicked in the action bar
 	 */
@@ -243,15 +243,14 @@ public class ViewContact extends Activity implements OnClickListener {
 		} else if (item.getItemId() == R.id.favourites_icon) {
 
 			//Contact is added or deleted from the favourites
-			boolean isFav = dbHelper.updateFavourite(id);
+			isFav = dbHelper.updateFavourite(id);
 			String change = " has been removed from ";
 			if (isFav){
 				change = " has been added to ";
 			}
 
 			Toast.makeText(ViewContact.this,fullName + change + "favourites" , Toast.LENGTH_LONG).show();
-			finish();
-
+			invalidateOptionsMenu();
 
 		} else if (item.getItemId() == R.id.edit_icon) {
 
@@ -266,6 +265,18 @@ public class ViewContact extends Activity implements OnClickListener {
 		}
 
 		return (super.onOptionsItemSelected(item));
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		MenuItem favIcon = menu.findItem(R.id.favourites_icon);
+		if (isFav) {
+			favIcon.setIcon(R.drawable.favourites_icon);
+		} else {
+			favIcon.setIcon(R.drawable.not_favourites_icon);
+		}
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 }

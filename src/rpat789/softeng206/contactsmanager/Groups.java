@@ -19,10 +19,10 @@ import android.widget.TextView;
 public class Groups extends Fragment implements SortListener {
 
 	private ListView lvGroups;
-	List<String> groupOptions;
+	private List<String> groupOptions;
 	private String sortOrder = "firstName";
 	private String group = null;
-	Cursor cursor;
+	private Cursor cursor;
 	private ContactsDatabaseHelper dbHelper;
 	boolean isGroupList;
 	private CursorListAdapter clAdapter;
@@ -31,22 +31,27 @@ public class Groups extends Fragment implements SortListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		rootView = inflater.inflate(R.layout.activity_main, container, false);
+		
 		isGroupList = true;
+		
+		//Initialize groups list
 		lvGroups = (ListView)rootView.findViewById(R.id.main_listView);
 		
+		//Opens database and register class as a listener
 		dbHelper = ContactsDatabaseHelper.getDatabase(getActivity());
 		dbHelper.addSortListener(this);
 
 		setUpListView();
 	    
+		//If a group is selected the view is refreshed by changing its adapter
 		lvGroups.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int clickedViewPosition, long id) {
 				// TODO Auto-generated method stub
 
+				//Retrieve the group name by its position from the list groupOptions
 				if (isGroupList) {
-					String groupSelected = groupOptions.get(clickedViewPosition);
-					group = groupSelected;
+					group = groupOptions.get(clickedViewPosition);
 					refresh();
 					isGroupList = false;
 				}
@@ -60,47 +65,64 @@ public class Groups extends Fragment implements SortListener {
 
 		groupOptions = new ArrayList<String>();
 
+		//Add these to the list - same order as the dialog box so  group can 
+		//be retrieved by the clicked view position
 		groupOptions.add("Not Assigned");
 		groupOptions.add("Emergency Contacts");
 		groupOptions.add("Family");
 		groupOptions.add("Friends");
 		groupOptions.add("Colleages");
 
+		//Set a list adapter when activity initially created so user can select a group
 		ListAdapter listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupOptions);
 		lvGroups.setAdapter(listAdapter);
 		
 	}
 
+	/**
+	 * The view is refreshed if new items are added dynamically
+	 */
 	@Override
 	public void OrderChanged(SortEvent se) {
-		// TODO Auto-generated method stub
+
+		//View is only refreshed if it is the current tab open
 		if (!(isGroupList) && (getActivity() != null)) {
 			sortOrder = se.getOrder();
 			refresh();
 		}
+		
 	} 
 	
+	/**
+	 * Changes the adapter for the list view to show the list of contacts in a 
+	 * particular group. Listener is added to the list view so when a contact is 
+	 * selected, ViewContact screen is displayed
+	 */
 	private void refresh() {
 		
+		//Retrieve data to be displayed by the listview
 		cursor = dbHelper.getGroupData(group, sortOrder);
 		
 		cursor.moveToFirst();
-
-		clAdapter = new CursorListAdapter(getActivity(), cursor);
+		clAdapter = new CursorListAdapter(getActivity(), cursor); 
 		
-		lvGroups.setAdapter(clAdapter);
+		//change adapter for the listView so layout is custom list view
+		lvGroups.setAdapter(clAdapter); 
 		
 		lvGroups.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int clickedViewPosition, long id) {
-				// TODO Auto-generated method stub
+
 				ViewGroup group = (ViewGroup)clickedView;
 
 				//get the first name in that view
 				View contactId = group.findViewById(R.id.contact_id);
 
+				//Access contact id text view
 				TextView fId = (TextView)contactId;
-
+				
+				//Get the id of the contact selected from the view and pass it to the 
+				//ViewContact activity
 				String idNum = fId.getText().toString();
 				Intent i = new Intent();
 				i.putExtra("ID", idNum);

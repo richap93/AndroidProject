@@ -70,6 +70,7 @@ public abstract class AddAbstract extends Activity {
 			@Override
 			public void onClick(View v) {
 
+				//Set intent as the camera and start camera application
 				Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 				startActivityForResult(intent, 0);
 				
@@ -97,6 +98,7 @@ public abstract class AddAbstract extends Activity {
 
 		if (requestCode == 0 && resultCode == RESULT_OK) {
 
+			//Retrieve the captured image
 			Bundle extras = data.getExtras();
 			Bitmap bmp = (Bitmap) extras.get("data");
 
@@ -104,6 +106,7 @@ public abstract class AddAbstract extends Activity {
 			bmp.compress(Bitmap.CompressFormat.PNG, 90, stream); //compress image
 			photo = stream.toByteArray();
 
+			//Set the image button 
 			image.setImageBitmap(bmp); 
 
 		}
@@ -115,6 +118,7 @@ public abstract class AddAbstract extends Activity {
 	 */
 	protected void getInfo() {
 		
+		//Get info and save it as Strings
 		firstName = fName.getText().toString();
 		lastName = lName.getText().toString();
 		mobNum = mobile.getText().toString();

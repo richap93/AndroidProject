@@ -108,7 +108,7 @@
 
         <ImageButton
             android:id="@+id/email_icon"
-            style="@style/CallIcon"
+            style="@style/EmailIcon"
             android:layout_below="@id/under_email_line" />
 
         <ImageView

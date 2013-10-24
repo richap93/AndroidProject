@@ -99,8 +99,8 @@ public class EditContact extends AddAbstract {
 				 
 			} else {
 				
-				ContactsDatabaseHelper entry = ContactsDatabaseHelper.getDatabase(EditContact.this);
-				entry.updateContact(id, firstName, lastName, mobNum, homePh, workPh, emailAddress, 
+				//Updates contact info in the database
+				dbHelper.updateContact(id, firstName, lastName, mobNum, homePh, workPh, emailAddress, 
 						homeAddress, workAddress, dateOfBirth, groupName, photo);
 				EditContact.this.finish();
 				

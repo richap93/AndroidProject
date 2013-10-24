@@ -58,10 +58,10 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			+ FAVOURITES + " INTEGER, " 
 			+ GROUPS + " TEXT, " 
 			+ IMAGE + " BLOB);";
-	
+
 	//Array of sort listeners to update the contacts list
 	private List<SortListener> listeners = new ArrayList<SortListener>();
-	
+
 	private String sortOrder = null;
 
 	private ContactsDatabaseHelper(Context context) {
@@ -84,14 +84,14 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		
+
 		db.execSQL(CREATE_CONTACTS_TABLE);
-		
+
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		
+
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
 		onCreate(db);
 
@@ -101,9 +101,9 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	 * Open the database for writing
 	 */
 	private void open() {
-		
+
 		contactsDb = dbHelper.getWritableDatabase();
-		
+
 	}
 
 	/**Insert contact information into the database 
@@ -122,9 +122,9 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	 */
 	public long insertContact(String first, String last, String mobile, String homePh, String workPh, String email,
 			String homeAdd, String workAdd, String dob, String group, byte[] image) {
-		
+
 		dbHelper.open();
-		
+
 		ContentValues cv = new ContentValues();
 		cv.put(FIRST_NAME, first);
 		cv.put(LAST_NAME, last);
@@ -138,7 +138,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		cv.put(FAVOURITES, 0);
 		cv.put(GROUPS, group);
 		cv.put(IMAGE, image);
-				
+
 		Log.d("testing", "group inserted is" + group);
 		return contactsDb.insert(TABLE_CONTACTS, null, cv);
 
@@ -150,23 +150,23 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	 * @return cursor object to all rows
 	 */
 	public Cursor getAllData(String orderType) {
-		
+
 		dbHelper.open();
 		return contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, orderType);
-		
+
 	} 
-	
+
 	/**
 	 * Returns all rows of contacts that are favourites, ie. value 1 in the database 
 	 * @param orderType ordering type of the contacts (First name/last name/mobile number)
 	 * @return cursor object to favourite contacts
 	 */
 	public Cursor getFavoritesData(String orderType) {
-		
+
 		dbHelper.open();
 		Log.d("testing", "orderType is "+orderType);
 		return contactsDb.query(TABLE_CONTACTS, null, FAVOURITES + "= 1", null, null, null, orderType);
-		
+
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 
 		dbHelper.open();
 		return contactsDb.query(TABLE_CONTACTS, null, GROUPS + "= ?", new String[]{groupName}, null, null, orderType);
-	
+
 	}
 
 	/**
@@ -191,17 +191,17 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 		return contactsDb.delete(TABLE_CONTACTS, null, null);
 
 	}
-	
+
 	/**
 	 * Returns the row with the contact information specified by an id
 	 * @param id the of the contact in the database
 	 * @return
 	 */
 	public Cursor getContact(String id) {
-		
+
 		dbHelper.open();
 		return contactsDb.query(TABLE_CONTACTS, null, CONTACTS_ID + "= ?", new String[]{id}, null, null, null);
-		
+
 	}
 
 	/**
@@ -209,33 +209,33 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 	 * @param id to the row of the contact information in the database
 	 */
 	public void deleteContact(String id) {
-		
+
 		this.getWritableDatabase().delete(TABLE_CONTACTS, CONTACTS_ID + " = " + id, null);
-		
+
 	}
-	
+
 	/**
 	 * Sets/unsets a favourite contact from what it was previously (1 if it was 0, 0 if it was 1)
 	 * @param id of the contact/row, whose favourite column is updated in the database
 	 * @return boolean variable that indicates if a contact is a favourite or not after updating
 	 */
 	public boolean updateFavourite(String id) {
-		
+
 		dbHelper.open();
-		
+
 		Cursor c = getContact(id);
 		c.moveToFirst();
-		
+
 		int f = c.getInt(10);
 		int setAs = (f == 0 ) ? 1 : 0;  //sets f as 1 if it is 0, or 0 if it is 1
-		
-	    ContentValues fav = new ContentValues();
-	    fav.put(FAVOURITES, setAs); 
-	    
-	    //updates the favourites column for that contact
-	    contactsDb.update(TABLE_CONTACTS, fav, CONTACTS_ID + "=" + id, null); 
-	    
-	    return (setAs == 1) ? true : false;
+
+		ContentValues fav = new ContentValues();
+		fav.put(FAVOURITES, setAs); 
+
+		//updates the favourites column for that contact
+		contactsDb.update(TABLE_CONTACTS, fav, CONTACTS_ID + "=" + id, null); 
+
+		return (setAs == 1) ? true : false;
 
 	}
 
@@ -259,69 +259,69 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper{
 			String homeAddress, String workAddress, String dateOfBirth, String groupName, byte[] image) {
 
 		dbHelper.open();
-		
-	    ContentValues newValues = new ContentValues();
-	    
-	    newValues.put(FIRST_NAME, firstName);
-	    newValues.put(LAST_NAME, lastName);
-	    newValues.put(MOBILE_PHONE, mobNum);
-	    newValues.put(HOME_PHONE, homePh);
-	    newValues.put(WORK_PHONE, workPh);
-	    newValues.put(EMAIL, emailAddress);
-	    newValues.put(HOME_ADDRESS, homeAddress);
-	    newValues.put(WORK_ADDRESS, workAddress);
-	    newValues.put(DOB, dateOfBirth);
-	    newValues.put(GROUPS, groupName);
-	    newValues.put(IMAGE, image);
-	    
-	    contactsDb.update(TABLE_CONTACTS, newValues, CONTACTS_ID + "=" + id, null);
-	    
+
+		ContentValues newValues = new ContentValues();
+
+		newValues.put(FIRST_NAME, firstName);
+		newValues.put(LAST_NAME, lastName);
+		newValues.put(MOBILE_PHONE, mobNum);
+		newValues.put(HOME_PHONE, homePh);
+		newValues.put(WORK_PHONE, workPh);
+		newValues.put(EMAIL, emailAddress);
+		newValues.put(HOME_ADDRESS, homeAddress);
+		newValues.put(WORK_ADDRESS, workAddress);
+		newValues.put(DOB, dateOfBirth);
+		newValues.put(GROUPS, groupName);
+		newValues.put(IMAGE, image);
+
+		contactsDb.update(TABLE_CONTACTS, newValues, CONTACTS_ID + "=" + id, null);
+
 	}
-	
+
 	/**
 	 * Sorts contacts in the database according to the sort order specified
 	 * @param order of the contacts required
 	 */
 	public void sortContacts(String order) {
-		
+
 		dbHelper.open();
 		sortOrder = order;
 		contactsDb.query(TABLE_CONTACTS, null, null, null, null, null, sortOrder);	
-		
+
 		fireSortEvent(); //listeners are informed of the change
-		
+
 	}
-	
+
 	/**
 	 * Adds a sort listener to the list of listeners
 	 * @param l listener to be added
 	 */
 	public void addSortListener(SortListener l) {
-		
+
 		listeners.add(l);
-		
+
 	}
-	
+
 	/**
 	 * Removes a listener from the list of listeners
 	 * @param l listener to be removed
 	 */
 	public void removeSortListener(SortListener l) {
-		
+
 		listeners.remove(l);
-		
+
 	}
-	
+
 	/**
 	 * Informs all listeners that the sort order has changed 
 	 */
 	private void fireSortEvent() {
-		
+
 		SortEvent event = new SortEvent(sortOrder);
-		
+
 		for(SortListener l : listeners){
 			l.OrderChanged(event);
 		}
-		
+
 	}
 }

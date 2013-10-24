@@ -12,6 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * Generic class that contains common implementation for the All contacts and 
+ * Favourites Tab
+ * @author Richa Patel
+ *
+ */
 public abstract class TabsAbstract extends Fragment implements SortListener {
 	
 	protected Cursor cursor;
@@ -27,6 +33,7 @@ public abstract class TabsAbstract extends Fragment implements SortListener {
 		View rootView = inflater.inflate(R.layout.activity_main, container, false);
 		super.onCreate(savedInstanceState);
 
+		//Open database and register a listener to the current activity
 		dbHelper = ContactsDatabaseHelper.getDatabase(getActivity());
 		dbHelper.addSortListener(this);
 
@@ -43,8 +50,10 @@ public abstract class TabsAbstract extends Fragment implements SortListener {
 				//get the first name in that view
 				View contactId = group.findViewById(R.id.contact_id);
 
+				//Get the Id of the contact in the listview 
 				TextView fId = (TextView)contactId;
 
+				//Gets Id as a string as passes it to the intent that opens ViewContact
 				String idNum = fId.getText().toString();
 				Intent i = new Intent();
 				i.putExtra("ID", idNum);
@@ -62,7 +71,7 @@ public abstract class TabsAbstract extends Fragment implements SortListener {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
+		
 		super.onResume();
 		refresh();
 
@@ -70,10 +79,13 @@ public abstract class TabsAbstract extends Fragment implements SortListener {
 	
 	@Override
 	public void OrderChanged(SortEvent se) {
-		// TODO Auto-generated method stub
+		
+		//Get the new order of contacts from the sortevent fired
 		sortOrder = se.getOrder();
 		if (getActivity() != null) {
 			refresh();
-		}
+		}S
+		
 	}
+	
 }
