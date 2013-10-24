@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -121,6 +122,7 @@ public abstract class AddAbstract extends Activity {
 		//Get info and save it as Strings
 		firstName = fName.getText().toString();
 		lastName = lName.getText().toString();
+		Log.d("testing", "name is "+ firstName + lastName);
 		mobNum = mobile.getText().toString();
 		homePh = homeNum.getText().toString();
 		workPh = workNum.getText().toString();

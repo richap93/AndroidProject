@@ -84,7 +84,7 @@ public abstract class TabsAbstract extends Fragment implements SortListener {
 		sortOrder = se.getOrder();
 		if (getActivity() != null) {
 			refresh();
-		}S
+		}
 		
 	}
 	

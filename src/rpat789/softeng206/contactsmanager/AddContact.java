@@ -50,7 +50,7 @@ public class AddContact extends AddAbstract {
 			//Dialog box displayed to the user to prompt them to confirm their decision
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddContact.this);
 			dialogBuilder.setTitle("Warning");
-			dialogBuilder.setMessage("Changes will be discarded");
+			dialogBuilder.setMessage("Information will be discarded");
 			dialogBuilder.setNegativeButton("Cancel", null);
 			dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 

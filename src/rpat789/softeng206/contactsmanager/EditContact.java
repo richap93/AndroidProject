@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class EditContact extends AddAbstract {
 
 	private Cursor c;
-	private String firstName, lastName, fullName, id;
+	private String fNameEdit, lNameEdit, fullNameEdit, id;
 	private List<TextView> tvs = new ArrayList<TextView>();
 	private ContactsDatabaseHelper dbHelper;
 
@@ -33,10 +33,10 @@ public class EditContact extends AddAbstract {
 
 		//get the contact name and populate the rest of the view
 		if (c.moveToFirst()) {
-			firstName = c.getString(1);
-			lastName = c.getString(2);
-			fullName = firstName + " " + lastName;
-			setTitle(fullName);
+			fNameEdit = c.getString(1);
+			lNameEdit = c.getString(2);
+			fullNameEdit = fNameEdit + " " + lNameEdit;
+			setTitle(fullNameEdit);
 			populateView(c);
 		}
 		
